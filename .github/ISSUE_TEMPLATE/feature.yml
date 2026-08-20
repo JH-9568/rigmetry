@@ -1,0 +1,60 @@
+name: 기능 구현
+description: 하나의 구현 가능한 OpenHarness 기능을 제안합니다
+title: "[기능] "
+labels:
+  - enhancement
+body:
+  - type: textarea
+    id: outcome
+    attributes:
+      label: 목표 결과
+      description: 이 Issue가 완료되면 무엇을 확인할 수 있어야 하나요?
+      placeholder: 유효한 Harness YAML을 타입이 있는 내부 Config로 변환할 수 있다.
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: 작업 범위
+      description: 포함할 동작과 수정할 모듈을 작성하세요.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: 완료 조건
+      description: 테스트 가능한 조건을 Checkbox로 작성하세요.
+      placeholder: |
+        - [ ] 유효한 입력을 처리한다
+        - [ ] 잘못된 입력에 이해 가능한 오류를 반환한다
+        - [ ] 관련 테스트가 통과한다
+        - [ ] 관련 문서와 예시를 갱신한다
+    validations:
+      required: true
+  - type: textarea
+    id: boundaries
+    attributes:
+      label: 의존성 경계와 보안
+      description: Credential, 경로, 명령 실행, 출력 redaction 또는 모듈 경계를 작성하세요.
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Issue 의존 관계
+      description: 선행 및 후속 Issue 번호를 작성하고 없으면 없음이라고 적으세요.
+      placeholder: |
+        Blocked by: #
+        Blocks: #
+    validations:
+      required: true
+  - type: textarea
+    id: non_goals
+    attributes:
+      label: 제외 범위
+      description: 이 Issue에서 의도적으로 구현하지 않을 관련 작업을 작성하세요.
+    validations:
+      required: true
+  - type: textarea
+    id: files
+    attributes:
+      label: 예상 수정 모듈 또는 파일
+      description: 다른 Contributor가 병렬 작업 충돌을 미리 확인할 수 있게 작성하세요.
