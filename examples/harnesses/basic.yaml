@@ -2,8 +2,8 @@
 name: basic
 
 model:
-  provider: deepseek
-  model: deepseek-chat
+  provider: ollama
+  model: qwen3:8b
 
 mcps:
   - filesystem

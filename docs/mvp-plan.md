@@ -16,7 +16,7 @@
 
 - 공통 Model과 Event 계약
 - Harness/Task Canonicalization과 Digest
-- OpenAI-compatible Model Adapter
+- OpenAI-compatible·Ollama Native Model Adapter
 - Step·Timeout·Token Budget Runtime
 - SQLite Event Trace와 Offline Replay
 - CI, License 검증과 최종 제출 통합
@@ -25,7 +25,7 @@
 
 - [#1 Experiment 핵심 계약과 Schema](https://github.com/JH-9568/rigmetry/issues/1)
 - [#2 Harness·Task 검증과 Lock Digest](https://github.com/JH-9568/rigmetry/issues/2)
-- [#4 OpenAI-compatible Adapter와 Token Budget Runtime](https://github.com/JH-9568/rigmetry/issues/4)
+- [#4 OpenAI-compatible·Ollama Native Adapter와 Token Budget Runtime](https://github.com/JH-9568/rigmetry/issues/4)
 - [#5 SQLite Event 저장과 Offline Replay](https://github.com/JH-9568/rigmetry/issues/5)
 - [#8 CI·라이선스·3분 시연 제출 패키지](https://github.com/JH-9568/rigmetry/issues/8)
 
@@ -61,6 +61,14 @@
 
 #2와 #3은 #1 Merge 후 병렬 진행합니다. #4에서 정한 Event를 #5가 저장·재생하고, #3의 Workspace/Evaluator와 #4/#5의 실행 결과를 #6이 연결합니다.
 
+## MVP Model 전략
+
+- 원격 기준선은 `openai-compatible` Adapter로 구현합니다.
+- 로컬 기준선은 Ollama Native `/api/chat` Adapter로 구현합니다.
+- DeepSeek 등 OpenAI 호환 서비스는 별도 Adapter를 만들지 않습니다.
+- 두 Adapter는 같은 내부 Model 요청·응답·Usage 계약을 만족해야 합니다.
+- 실제 비교 실험에서는 Model 차이와 Harness 차이를 한 번에 섞지 않고, 같은 Model 안에서 Harness Variant를 비교합니다.
+
 ## 7일 일정
 
 | 날짜 | 통합 목표 | JH-9568 | minsub1489 |
@@ -93,7 +101,7 @@
 
 제출 전에는 다음을 구현하지 않습니다.
 
-- Claude, Gemini, Ollama 등 추가 Provider
+- Claude, Gemini, vLLM 등 세 번째 Provider Adapter
 - Web Dashboard
 - Multi-agent, Memory와 Human-in-the-loop
 - 대규모 Benchmark와 Leaderboard

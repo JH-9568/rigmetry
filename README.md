@@ -66,6 +66,15 @@ success@50k                 40%          80%
 
 Credential은 Harness에 포함하지 않습니다. API Key는 실행 시 환경변수에서만 주입하며 Config, Lock, SQLite, Trace, Report에 저장하지 않습니다.
 
+### MVP Model Adapter 전략
+
+MVP는 서로 다른 실행 경계를 검증하기 위해 다음 두 Adapter를 목표로 합니다.
+
+- **OpenAI-compatible**: 환경변수로 Credential을 주입하는 원격 API
+- **Ollama Native**: 로컬 Ollama의 `/api/chat`을 사용하는 로컬 실행
+
+DeepSeek처럼 OpenAI 호환 API를 제공하는 서비스는 별도 Adapter를 만들지 않고 OpenAI-compatible 설정으로 연결할 수 있게 설계합니다. Ollama는 OpenAI 호환 Endpoint가 아니라 Native API로 연동하여 Adapter 경계와 로컬 실행 지표 정규화를 실제로 검증합니다. 두 Adapter 모두 아직 구현되지 않았습니다.
+
 ## Quick Start
 
 현재 Repository foundation을 설치하고 검증할 수 있습니다.
@@ -89,8 +98,8 @@ ruff check .
 name: coding-basic
 
 model:
-  provider: deepseek
-  model: deepseek-chat
+  provider: ollama
+  model: qwen3:8b
 
 system_prompt: >
   변경 전 테스트를 실행하고 실패 원인을 확인한 뒤 최소한으로 수정하라.
@@ -176,7 +185,7 @@ Rigmetry는 외부 Model이 live rerun에서 같은 응답을 생성한다고 �
 
 ## Architecture
 
-Runtime은 OpenAI, DeepSeek 또는 MCP 구현체를 직접 import하지 않고 프로젝트 내부 계약에만 의존해야 합니다. 자세한 책임과 의존성 방향은 [Architecture](docs/architecture.md)를 참고하세요.
+Runtime은 OpenAI-compatible, Ollama 또는 MCP 구현체를 직접 import하지 않고 프로젝트 내부 계약에만 의존해야 합니다. 자세한 책임과 의존성 방향은 [Architecture](docs/architecture.md)를 참고하세요.
 
 ## Project Status
 
@@ -202,13 +211,13 @@ Runtime은 OpenAI, DeepSeek 또는 MCP 구현체를 직접 import하지 않고 �
 
 1. Harness/Task Schema와 deterministic canonicalization
 2. Provider 중립 Model/Event 계약
-3. OpenAI-compatible Model Adapter와 제한된 Agent Runtime
+3. OpenAI-compatible·Ollama Native Model Adapter와 제한된 Agent Runtime
 4. 격리 Workspace, Terminal Tool, Command Evaluator
 5. SQLite Event Trace와 offline replay
 6. Token Budget 기반 반복 Experiment와 Compare Report
 7. 재현 가능한 예제 Benchmark와 결과 공개
 
-Claude, Gemini, Ollama, vLLM, Web Dashboard와 대규모 Benchmark는 MVP 이후 범위입니다.
+Claude, Gemini, vLLM, 세 번째 Model Adapter, Web Dashboard와 대규모 Benchmark는 MVP 이후 범위입니다.
 
 2인 역할, Issue dependency와 8월 27일까지의 일별 계획은 [대회 MVP 계획](docs/mvp-plan.md)에서 관리합니다.
 
