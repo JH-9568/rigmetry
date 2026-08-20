@@ -21,14 +21,14 @@ evaluator:
 ```text
 Task
   → Task digest
-  → Isolated Workspace
+  → Disposable Workspace
   → Budgeted Agent Execution
   → Evaluator
   → Run Result
 ```
 
 1. Task Runner가 Task를 읽고 검증해 `task_digest`를 계산합니다.
-2. Workspace Manager가 원본 revision에서 격리된 사본을 만듭니다.
+2. Workspace Manager가 원본 revision에서 disposable 사본을 만듭니다.
 3. Agent Runtime이 정해진 단계·시간·Token Budget 안에서 실행합니다.
 4. Evaluator가 변경된 Workspace를 검사합니다.
 5. Result와 Trace를 Experiment의 한 Run으로 저장합니다.
@@ -43,7 +43,9 @@ Harness 비교에 포함되는 각 Run은 같은 `task_digest`와 Workspace revi
 
 ### `workspace`
 
-Task 원본 디렉터리입니다. 상대 경로 기준은 Config Loader 구현 시 확정합니다. Runtime은 허용 root 밖의 경로를 거부하고 격리된 사본에서 실행해야 합니다.
+Task 원본 디렉터리입니다. 상대 경로 기준은 Config Loader 구현 시 확정합니다. Runtime은 Rigmetry가 해석하는 허용 root 밖의 경로를 거부하고 disposable 사본에서 실행해야 합니다.
+
+임시 디렉터리 또는 Git worktree는 원본 보호 수단이며 Shell Process의 시스템 접근을 막는 보안 Sandbox가 아닙니다. Container/VM 격리는 별도 범위입니다.
 
 Task digest에 Workspace 전체를 포함할지, Git commit과 Fixture Manifest를 사용할지는 Workspace 구현 Issue에서 결정합니다.
 
@@ -54,7 +56,7 @@ Agent에 전달할 작업 지시문입니다. Evaluator Secret이나 Provider Cr
 ### `evaluator`
 
 - `type`: Evaluator 구현 선택. MVP는 `command`
-- `command`: 격리 Workspace에서 실행할 명령
+- `command`: disposable Workspace에서 실행할 명령
 - `timeout`: Evaluator 최대 실행 시간(초)
 
 Command Evaluator 구현 전에 Process 격리, 출력 크기 제한, exit code 의미와 shell 사용 여부를 명확히 정해야 합니다.

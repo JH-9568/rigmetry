@@ -18,6 +18,8 @@
 - [ ] Runtime이 구체적인 Model Provider 또는 MCP Transport에 직접 의존하지 않는다
 - [ ] 문서와 예시가 구현된 기능과 계획된 기능을 구분한다
 - [ ] 새 Config 또는 공개 계약에 관련 테스트가 있다
+- [ ] Experiment 변경 시 `require_same`과 `allow_diff` 경계를 검증했다
+- [ ] Replay/Evidence 변경 시 외부 호출 0회와 내부 일관성 검사를 확인했다
 
 ## 제한사항과 후속 작업
 

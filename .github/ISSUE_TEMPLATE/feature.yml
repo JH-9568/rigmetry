@@ -35,7 +35,7 @@ body:
     id: boundaries
     attributes:
       label: 의존성 경계와 보안
-      description: Credential, 경로, 명령 실행, 출력 redaction 또는 모듈 경계를 작성하세요.
+      description: Credential, 경로, 명령 실행, 출력 redaction, 실험 통제 조건 또는 모듈 경계를 작성하세요.
   - type: textarea
     id: dependencies
     attributes:

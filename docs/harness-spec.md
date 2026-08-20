@@ -14,8 +14,7 @@ model:
 system_prompt: >
   변경 전 테스트를 실행하고 실패 원인을 확인한 뒤 최소한으로 수정하라.
 
-mcps:
-  - filesystem
+mcps: []
 
 tools:
   - terminal
@@ -65,13 +64,15 @@ model:
 
 DeepSeek처럼 OpenAI 호환 API를 제공하는 서비스는 전용 Adapter가 아니라 `openai-compatible`의 `base_url`, `model`, `api_key_env` 설정으로 연결합니다. 지원 Endpoint, 기본 URL과 필수 옵션은 Model Adapter 구현 Issue에서 확정합니다.
 
+Adapter는 Tool calling, Token usage, seed와 native model digest 같은 Capability를 선언해야 합니다. Harness와 Experiment가 요구하는 Capability를 충족하지 못하면 Runtime 외부 호출 전에 Validation 오류를 반환합니다.
+
 ### `system_prompt`
 
 Agent에 적용할 최상위 지침입니다. MVP는 inline text를 우선 지원하고 파일 참조는 경로·digest 규칙이 정해진 뒤 추가할 수 있습니다.
 
 ### `mcps`
 
-Harness에서 사용할 MCP Server 참조 목록입니다. 예시는 등록된 짧은 이름을 사용합니다. Process, Transport와 Allow-list를 포함한 구조는 MCP 구현 Issue에서 확정합니다.
+Harness에서 사용할 MCP Server 참조 목록입니다. 기본 예시는 실제 연결이 구현되기 전까지 빈 목록을 사용합니다. Process, Transport와 Allow-list를 포함한 구조는 MCP 구현 Issue에서 확정하며, 지원되지 않는 참조를 조용히 무시하면 안 됩니다.
 
 ### `tools`
 
@@ -116,6 +117,8 @@ Skill 지침 파일 경로 목록입니다. 상대 경로는 Harness 파일 위�
 ```
 
 정규화 방식, Tool/MCP Schema digest, Runtime version과 Environment fingerprint는 [Experiment Model](experiment-model.md)에서 설명합니다.
+
+Lock에는 요청 Model 설정을 기록합니다. 실제 Run Manifest에는 응답 Model ID, Adapter version과 Ollama Model digest처럼 실행 중 관측한 Model provenance를 별도로 기록합니다. 외부 Provider의 가변 alias를 Lock만으로 완전히 고정할 수 있다고 주장하지 않습니다.
 
 ## 보안 원칙
 
