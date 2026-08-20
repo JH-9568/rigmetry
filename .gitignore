@@ -15,8 +15,8 @@ dist/
 .env.*
 !.env.example
 
-# Local OpenHarness state
-.openharness/
+# Local Rigmetry state
+.rigmetry/
 *.db
 *.sqlite
 *.sqlite3

@@ -1,6 +1,6 @@
 # Development Guide
 
-OpenHarness는 2명이 GitHub Issue를 기준으로 병렬 개발하는 것을 전제로 합니다. Issue는 계획 단위, Branch는 구현 단위, PR은 Review와 Merge 단위입니다.
+Rigmetry는 2명이 GitHub Issue를 기준으로 병렬 개발하는 것을 전제로 합니다. Issue는 계획 단위, Branch는 구현 단위, PR은 Review와 Merge 단위입니다.
 
 ## 2인 역할 분배
 
@@ -8,9 +8,10 @@ OpenHarness는 2명이 GitHub Issue를 기준으로 병렬 개발하는 것을 �
 
 ### Contributor A: Config와 실행 Core
 
-- Harness/Task Pydantic Schema와 YAML Loader (`config`)
+- Harness/Task Schema, Canonicalization과 Lock (`config`)
 - Provider 중립 Model 계약과 Adapter (`models`)
 - Agent Loop와 실행 제한 (`runtime`)
+- Event Trace와 Offline Replay (`tracing`)
 - 완료된 Core 기능을 노출하는 CLI (`cli`)
 
 ### Contributor B: Capability와 Task 수명 주기
@@ -19,10 +20,12 @@ OpenHarness는 2명이 GitHub Issue를 기준으로 병렬 개발하는 것을 �
 - Tool 등록과 호출 (`tools`)
 - 격리된 Workspace 준비 (`workspace`)
 - Task Runner와 Evaluator (`tasks`, `evaluation`)
+- SQLite 저장과 Metric 집계 (`storage`, `metrics`)
+- 반복 Experiment와 Compare Report (`experiment`)
 
 ### 공동 작업
 
-Tracing, Metrics, Storage, Report, Experiment, Compare는 두 영역의 계약에 의존합니다. Core Result/Event 형태를 합의하고 Merge한 뒤 별도 Issue로 진행합니다. 소유권은 조정 책임을 뜻하며 다른 팀원의 수정을 금지하지 않습니다.
+`run_id`, Digest, Event envelope, Token usage, Run Result는 두 영역이 공유하는 계약입니다. [Experiment Model](experiment-model.md)을 기준으로 최소 형태를 합의하고 Merge한 뒤 병렬 구현합니다. 소유권은 조정 책임을 뜻하며 다른 팀원의 수정을 금지하지 않습니다.
 
 두 병렬 Issue가 데이터를 주고받아야 한다면 먼저 경계에 필요한 최소 데이터만 합의합니다. 해당 계약을 별도 선행 Issue로 Merge한 뒤 양쪽 구현을 시작합니다. 병렬 작업을 시작하기 위해 사용하지 않을 Interface를 미리 만들지 않습니다.
 

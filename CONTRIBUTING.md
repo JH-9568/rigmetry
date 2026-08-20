@@ -1,6 +1,6 @@
-# OpenHarness 기여 가이드
+# Rigmetry 기여 가이드
 
-OpenHarness는 초기 개발 단계입니다. 모든 변경은 작고 명확한 GitHub Issue를 기준으로 진행하며, 구현된 기능과 계획된 기능을 문서에서 분명히 구분해야 합니다.
+Rigmetry는 초기 개발 단계입니다. 모든 변경은 작고 명확한 GitHub Issue를 기준으로 진행하며, 구현된 기능과 계획된 기능을 문서에서 분명히 구분해야 합니다.
 
 ## 작업 전 필수 확인
 
@@ -26,11 +26,11 @@ ruff check .
 Commit prefix는 영문 Conventional Commit 형식을 유지하고, prefix 뒤의 제목은 한국어로 작성합니다.
 
 ```text
-feat: 하네스 YAML 검증 추가
+feat: Harness Lock 생성 추가
 fix: 누락된 Provider 오류 처리
-docs: Model Adapter 의존성 경계 설명
-test: 최대 실행 단계 회귀 테스트 추가
-refactor: 실행 결과 변환 로직 단순화
+docs: Replay 보장 범위 설명
+test: Token Budget 종료 회귀 테스트 추가
+refactor: Event 변환 로직 단순화
 chore: Ruff 설정 정리
 ```
 

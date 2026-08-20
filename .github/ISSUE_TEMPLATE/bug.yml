@@ -1,5 +1,5 @@
 name: 버그 수정
-description: 재현 가능한 OpenHarness 결함을 보고합니다
+description: 재현 가능한 Rigmetry 결함을 보고합니다
 title: "[버그] "
 labels:
   - bug

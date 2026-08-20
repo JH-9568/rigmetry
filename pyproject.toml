@@ -3,13 +3,13 @@ requires = ["setuptools>=77"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "openharness"
+name = "rigmetry"
 version = "0.1.0"
-description = "재현 가능한 AI Agent 실행과 평가를 위한 Harness-as-Code Infrastructure"
+description = "AI Agent Harness를 잠그고 재생하며 동일 예산에서 비교하는 실험 엔진"
 readme = "README.md"
 requires-python = ">=3.11"
 license = "MIT"
-authors = [{ name = "OpenHarness 기여자" }]
+authors = [{ name = "Rigmetry 기여자" }]
 keywords = ["ai-agent", "harness", "evaluation", "mcp"]
 classifiers = [
   "Development Status :: 2 - Pre-Alpha",
@@ -33,12 +33,12 @@ dev = [
 ]
 
 [project.scripts]
-openharness = "openharness.cli:app"
+rigmetry = "rigmetry.cli:app"
 
 [project.urls]
-Homepage = "https://github.com/JH-9568/openharness"
-Repository = "https://github.com/JH-9568/openharness"
-Issues = "https://github.com/JH-9568/openharness/issues"
+Homepage = "https://github.com/JH-9568/rigmetry"
+Repository = "https://github.com/JH-9568/rigmetry"
+Issues = "https://github.com/JH-9568/rigmetry/issues"
 
 [tool.setuptools.packages.find]
 where = ["src"]

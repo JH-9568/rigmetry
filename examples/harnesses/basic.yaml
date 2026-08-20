@@ -16,3 +16,4 @@ skills: []
 runtime:
   max_steps: 20
   timeout: 120
+  max_total_tokens: 50000
