@@ -1,5 +1,5 @@
 name: 기능 구현
-description: 하나의 구현 가능한 OpenHarness 기능을 제안합니다
+description: 하나의 구현 가능한 Rigmetry 기능을 제안합니다
 title: "[기능] "
 labels:
   - enhancement

@@ -1,6 +1,6 @@
 # Task Specification (Draft)
 
-Task는 Harness를 평가할 Workspace, Agent 지시문, 성공 판정 방법을 정의합니다. 현재 문서는 MVP 설계 초안이며 Task Runner와 Evaluator는 아직 구현되지 않았습니다.
+Task는 Harness Variant를 비교할 Workspace, Agent 지시문, 성공 판정 방법을 정의합니다. 현재 Task Runner와 Evaluator는 아직 구현되지 않았습니다.
 
 ## 예시
 
@@ -20,29 +20,32 @@ evaluator:
 
 ```text
 Task
+  → Task digest
   → Isolated Workspace
-  → Agent Execution
+  → Budgeted Agent Execution
   → Evaluator
-  → Result
+  → Run Result
 ```
 
-1. Task Runner가 Task를 읽고 검증합니다.
-2. Workspace Manager가 `workspace`에서 격리된 작업 사본을 만듭니다.
-3. Agent Runtime은 `prompt`를 전달받아 격리된 사본 안에서만 작업합니다.
+1. Task Runner가 Task를 읽고 검증해 `task_digest`를 계산합니다.
+2. Workspace Manager가 원본 revision에서 격리된 사본을 만듭니다.
+3. Agent Runtime이 정해진 단계·시간·Token Budget 안에서 실행합니다.
 4. Evaluator가 변경된 Workspace를 검사합니다.
-5. Task Runner가 Result를 만들고 Run Trace 및 Metrics와 연결합니다.
+5. Result와 Trace를 Experiment의 한 Run으로 저장합니다.
 
-Run은 원본 Workspace를 변경해서는 안 됩니다. 구체적인 격리 방법은 Workspace 구현 Issue에서 결정합니다.
+Harness 비교에 포함되는 각 Run은 같은 `task_digest`와 Workspace revision을 사용해야 합니다.
 
 ## 필드
 
 ### `id`
 
-Run metadata에서 Task를 구분할 안정적이고 사람이 읽기 쉬운 식별자입니다. 고유성과 versioning 규칙은 아직 확정하지 않습니다.
+사람이 읽을 Task 이름입니다. `task_digest`를 대신하지 않습니다.
 
 ### `workspace`
 
-Task의 원본 디렉터리입니다. 상대 경로는 Task 파일 위치를 기준으로 해석하는 방향이지만 Config Loader 구현 시 확정해야 합니다. Runtime은 허용된 root 밖으로 벗어나는 경로를 거부하고 격리된 사본에서 실행해야 합니다.
+Task 원본 디렉터리입니다. 상대 경로 기준은 Config Loader 구현 시 확정합니다. Runtime은 허용 root 밖의 경로를 거부하고 격리된 사본에서 실행해야 합니다.
+
+Task digest에 Workspace 전체를 포함할지, Git commit과 Fixture Manifest를 사용할지는 Workspace 구현 Issue에서 결정합니다.
 
 ### `prompt`
 
@@ -50,14 +53,19 @@ Agent에 전달할 작업 지시문입니다. Evaluator Secret이나 Provider Cr
 
 ### `evaluator`
 
-Task 성공을 판정하는 방법입니다.
-
-- `type`: Evaluator 구현 선택. MVP 예시는 `command`
-- `command`: 격리된 Workspace에서 실행할 예정인 명령
+- `type`: Evaluator 구현 선택. MVP는 `command`
+- `command`: 격리 Workspace에서 실행할 명령
 - `timeout`: Evaluator 최대 실행 시간(초)
 
-Command Evaluator는 아직 구현되지 않았습니다. 임의 Task 파일을 신뢰하기 전에 Process 격리, 출력 크기 제한, exit code 의미, shell 사용 여부를 명확히 정해야 합니다.
+Command Evaluator 구현 전에 Process 격리, 출력 크기 제한, exit code 의미와 shell 사용 여부를 명확히 정해야 합니다.
 
 ## Result 방향
 
-Result는 Agent 실행 실패와 평가 실패를 구분하고, 직렬화 가능하며 Credential이 제거된 데이터만 포함해야 합니다. 정확한 Result 필드와 Score 정책은 Trace, Metrics, Evaluator 계약을 정의할 때 결정합니다.
+Result는 최소한 다음을 구분할 예정입니다.
+
+- Agent 실행 성공 여부와 종료 사유
+- Evaluator 실행 성공 여부와 Task 판정
+- 사용한 Harness/Task/Environment digest
+- Token, 호출 수, 단계 수, 실행 시간
+
+정확한 집계 방식은 [Experiment Model](experiment-model.md)을 따릅니다.

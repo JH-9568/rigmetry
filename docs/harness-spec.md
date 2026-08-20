@@ -1,6 +1,6 @@
 # Harness Specification (Draft)
 
-이 문서는 MVP Harness 정의의 목표 형태를 설명합니다. 아직 확정된 호환성 계약이 아니며, 실제 Parser와 Validator를 구현하는 Issue에서 세부 규칙을 결정합니다.
+이 문서는 Rigmetry MVP Harness 정의의 목표 형태를 설명합니다. 작성자가 관리하는 `harness.yaml`과 Rigmetry가 생성할 Lock Manifest는 별개입니다. 세부 Validation 규칙은 Config 구현 Issue에서 확정합니다.
 
 ## 예시
 
@@ -10,6 +10,9 @@ name: coding-basic
 model:
   provider: deepseek
   model: deepseek-chat
+
+system_prompt: >
+  변경 전 테스트를 실행하고 실패 원인을 확인한 뒤 최소한으로 수정하라.
 
 mcps:
   - filesystem
@@ -23,55 +26,81 @@ skills:
 runtime:
   max_steps: 20
   timeout: 120
+  max_total_tokens: 50000
 ```
 
 ## 필드
 
 ### `name`
 
-출력과 Report에서 Harness를 구분하는 사람이 읽기 쉬운 이름입니다. 이름의 전역 고유성 여부는 아직 확정하지 않습니다. 개별 Run에는 별도의 식별자가 필요합니다.
+Report에서 Harness Variant를 구분할 이름입니다. 개별 Run 식별자와 digest를 대신하지 않습니다.
 
 ### `model`
 
-Model Adapter와 Model을 선택합니다.
-
-- `provider`: `deepseek`, 향후 `openai-compatible` 등 Adapter 식별자
+- `provider`: Model Adapter 식별자
 - `model`: Provider에 전달할 Model 식별자
 
-Provider별 옵션은 이후 추가할 수 있지만 Runtime에 Provider SDK 타입이 노출되어서는 안 됩니다. Credential은 이 필드에 허용하지 않습니다. Adapter는 Run 시작 시 Process 환경변수에서 필요한 API Key를 읽습니다.
+Provider별 옵션은 내부 Runtime 계약과 분리해야 합니다. API Key와 Credential은 이 Config에 허용하지 않습니다.
+
+### `system_prompt`
+
+Agent에 적용할 최상위 지침입니다. MVP는 inline text를 우선 지원하고 파일 참조는 경로·digest 규칙이 정해진 뒤 추가할 수 있습니다.
 
 ### `mcps`
 
-Harness에서 사용할 MCP Server 참조 목록입니다. 예시는 등록된 짧은 이름을 사용합니다. Process, Transport, Allow-list를 포함하는 구조화된 항목은 필요가 확인된 뒤 설계합니다. 현재 Draft에서는 Transport Schema와 lifecycle 정책을 고정하지 않습니다.
+Harness에서 사용할 MCP Server 참조 목록입니다. 예시는 등록된 짧은 이름을 사용합니다. Process, Transport와 Allow-list를 포함한 구조는 MCP 구현 Issue에서 확정합니다.
 
 ### `tools`
 
-Agent에 노출할 Tool 목록입니다. 짧은 이름은 Tool Manager를 통해 해석될 예정입니다. Tool 권한, 인자 Schema, Sandbox 정책은 실제 구현 Issue에서 결정합니다.
+Agent에 노출할 Tool 목록입니다. Tool Manager가 이름을 해석하고 Schema와 권한을 관리합니다.
 
 ### `skills`
 
-Skill 지침 파일의 경로나 향후 등록형 참조 목록입니다. 상대 경로는 Harness 파일 위치를 기준으로 해석하는 방향이지만 Config Loader 구현 시 확정해야 합니다. Skill을 불러오는 행위만으로 Tool 권한이 부여되어서는 안 됩니다.
+Skill 지침 파일 경로 목록입니다. 상대 경로는 Harness 파일 위치 기준으로 해석하는 방향이며 Config Loader 구현 시 확정합니다. Lock에는 경로뿐 아니라 파일 content digest가 필요합니다.
 
 ### `runtime`
 
-Model Provider와 독립적인 실행 제한입니다.
-
 - `max_steps`: 한 Run에서 허용할 최대 Agent 단계 수
 - `timeout`: 한 Run의 최대 wall-clock 실행 시간(초)
+- `max_total_tokens`: 한 Run에서 Provider가 보고한 누적 전체 Token 상한
 
-Adapter 또는 Tool이 자체 제한을 제공하지 않아도 Runtime이 이 제한을 강제해야 합니다. 취소 처리와 Tool별 timeout은 별도 설계 대상입니다.
+`max_total_tokens`는 공정한 Experiment 비교를 위한 Budget입니다. Provider가 usage를 제공하지 않는 경우의 실행 허용 여부는 Adapter capability와 Validation 정책으로 명시해야 합니다.
 
-### 향후 `system_prompt`
+## 생성 예정 Lock Manifest
 
-최상위 Agent 지침을 inline text 또는 파일 참조로 제공할 필요가 있습니다. Prompt 결합 및 경로 해석 규칙이 정해질 때까지 필드 형태는 확정하지 않습니다.
+다음 형태는 방향을 설명하기 위한 예시입니다.
 
-## 보안과 이식성 원칙
+```json
+{
+  "schema_version": 1,
+  "harness_digest": "sha256:...",
+  "model": {
+    "provider": "deepseek",
+    "model": "deepseek-chat"
+  },
+  "artifacts": {
+    "system_prompt": "sha256:...",
+    "skills": {
+      "./skills/debugging/SKILL.md": "sha256:..."
+    }
+  },
+  "runtime": {
+    "max_steps": 20,
+    "timeout": 120,
+    "max_total_tokens": 50000
+  }
+}
+```
 
-- API Key, Access Token, Password, Private Credential을 Harness YAML에 작성하지 않습니다.
-- Runtime Secret은 환경변수에서만 읽고 Trace, 오류, Report, SQLite에서 제거합니다.
-- Harness는 필요한 capability를 선언할 뿐이며 Workspace와 Tool 경계는 Runtime이 강제합니다.
-- 경로, Provider 옵션, MCP Transport 설정은 사용 전에 검증해야 합니다.
+정규화 방식, Tool/MCP Schema digest, Runtime version과 Environment fingerprint는 [Experiment Model](experiment-model.md)에서 설명합니다.
+
+## 보안 원칙
+
+- API Key, Token, Password와 Private Credential을 YAML과 Lock에 작성하지 않습니다.
+- Runtime Secret은 환경변수에서만 읽습니다.
+- Trace, 오류, Report, SQLite에 저장하기 전에 Secret을 제거합니다.
+- Harness는 Capability를 요청할 뿐이며 실제 권한 경계는 Runtime과 Tool Manager가 강제합니다.
 
 ## 구현 상태
 
-Parser와 Validator는 아직 구현되지 않았습니다. 기본값, 알 수 없는 필드 처리, 상대 경로 기준, Schema versioning은 Config 구현 Issue에서 결정합니다.
+Parser, Validator, Canonicalizer와 Lock 생성은 아직 구현되지 않았습니다.
