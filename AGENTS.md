@@ -6,12 +6,13 @@
 
 1. [README.md](README.md): 제품 정의, 현재 구현 상태, MVP 범위
 2. [docs/mvp-plan.md](docs/mvp-plan.md): 담당자, Issue dependency, 7일 일정과 Scope Freeze
-3. [docs/experiment-model.md](docs/experiment-model.md): Digest, Event, Replay, Token, Compare 계약
-4. [docs/architecture.md](docs/architecture.md): 모듈 책임과 의존성 방향
-5. [docs/harness-spec.md](docs/harness-spec.md): Harness Draft 명세
-6. [docs/task-spec.md](docs/task-spec.md): Task Draft 명세
-7. [docs/development.md](docs/development.md): 역할, Issue, Branch, Commit, PR 원칙
-8. [CONTRIBUTING.md](CONTRIBUTING.md)와 담당 GitHub Issue
+3. [docs/experiment-spec.md](docs/experiment-spec.md): Variant, 통제 조건과 반복 계획
+4. [docs/experiment-model.md](docs/experiment-model.md): Digest, Event, Replay, Token, Compare와 Evidence 계약
+5. [docs/architecture.md](docs/architecture.md): 모듈 책임과 의존성 방향
+6. [docs/harness-spec.md](docs/harness-spec.md): Harness Draft 명세
+7. [docs/task-spec.md](docs/task-spec.md): Task Draft 명세
+8. [docs/development.md](docs/development.md): 역할, Issue, Branch, Commit, PR 원칙
+9. [CONTRIBUTING.md](CONTRIBUTING.md)와 담당 GitHub Issue
 
 ## 제품 중심
 
@@ -19,8 +20,9 @@ Rigmetry는 범용 Agent Framework가 아니라 다음을 위한 Harness 실험 
 
 - 실행 구성 fingerprint와 Lock
 - 제한된 Runtime과 append-only Event Trace
-- 기록된 결과를 사용하는 offline replay
-- 동일 Task와 Token Budget의 반복 Harness 비교
+- 기록된 경계 결과를 사용하는 무호출 Runtime replay
+- 동일 Task·Model·Budget의 통제된 Harness 비교
+- Lock, Event, Run과 Report를 묶은 검증 가능한 Evidence Bundle
 
 Provider 수나 Tool 수를 늘리는 것보다 재현 가능하고 공정한 비교를 우선합니다.
 
@@ -40,14 +42,16 @@ Issue 없이 새 핵심 기능을 만들지 않습니다.
 - Provider 응답, 오류와 Token usage는 Adapter 경계에서 내부 타입으로 변환합니다.
 - Credential은 환경변수에서 Runtime에만 주입하고 Config, Lock, DB, Trace, 로그, Report에 저장하지 않습니다.
 - `run_id`, `harness_digest`, `task_digest`, `environment_digest`를 혼용하지 않습니다.
+- Experiment의 `require_same`, `allow_diff` 밖의 차이를 허용하지 않습니다.
 - 측정할 수 없는 Token 값은 `0`이 아니라 `null`입니다.
-- Task는 격리된 Workspace에서 실행하고 원본을 변경하지 않습니다.
+- 서로 다른 Provider/tokenizer의 Token 수를 같은 단위처럼 직접 비교하지 않습니다.
+- Task는 disposable Workspace에서 실행하고 원본을 변경하지 않습니다. 이를 보안 Sandbox라고 표현하지 않습니다.
 - Skill은 지침 데이터이며 Tool 권한을 부여하지 않습니다.
 - 새로운 추상화는 실제 경계가 필요할 때만 추가합니다.
 
 ## 재현성 표현
 
-외부 Model의 live rerun이 같은 응답을 생성한다고 주장하지 않습니다. Config 동일성, offline replay, 반복 실험의 통계적 비교를 구분합니다.
+외부 Model의 live rerun이 같은 응답을 생성한다고 주장하지 않습니다. Config 동일성, 저장된 Model·Tool·Evaluator 결과를 사용하는 Runtime replay, 반복 실험의 통계적 비교와 Evidence 내부 무결성을 구분합니다.
 
 ## 현재 구현 금지 범위
 
@@ -55,7 +59,7 @@ Issue 없이 새 핵심 기능을 만들지 않습니다.
 
 - 실제 Agent Loop와 Model API 호출
 - 실제 MCP 연결과 Tool 실행
-- Workspace 격리와 Evaluator
+- Disposable Workspace와 Evaluator
 - Event Replay와 Harness Compare
 
 문서의 목표 CLI와 예시 수치를 구현된 기능이나 실제 Benchmark 결과처럼 표현하지 않습니다.

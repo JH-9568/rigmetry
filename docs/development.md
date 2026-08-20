@@ -8,7 +8,7 @@ Rigmetry는 2명이 GitHub Issue를 기준으로 병렬 개발하는 것을 전�
 
 ### Contributor A: Config와 실행 Core
 
-- Harness/Task Schema, Canonicalization과 Lock (`config`)
+- Harness/Task/Experiment Schema, Canonicalization과 Lock (`config`)
 - Provider 중립 Model 계약과 Adapter (`models`)
 - Agent Loop와 실행 제한 (`runtime`)
 - Event Trace와 Offline Replay (`tracing`)
@@ -18,14 +18,14 @@ Rigmetry는 2명이 GitHub Issue를 기준으로 병렬 개발하는 것을 전�
 
 - MCP 연결 lifecycle (`mcp`)
 - Tool 등록과 호출 (`tools`)
-- 격리된 Workspace 준비 (`workspace`)
+- disposable Workspace 준비 (`workspace`)
 - Task Runner와 Evaluator (`tasks`, `evaluation`)
 - SQLite 저장과 Metric 집계 (`storage`, `metrics`)
 - 반복 Experiment와 Compare Report (`experiment`)
 
 ### 공동 작업
 
-`run_id`, Digest, Event envelope, Token usage, Run Result는 두 영역이 공유하는 계약입니다. [Experiment Model](experiment-model.md)을 기준으로 최소 형태를 합의하고 Merge한 뒤 병렬 구현합니다. 소유권은 조정 책임을 뜻하며 다른 팀원의 수정을 금지하지 않습니다.
+`run_id`, Digest, Event envelope, Token usage, Run Result와 Experiment 통제 조건은 두 영역이 공유하는 계약입니다. [Experiment Model](experiment-model.md)과 [Experiment Specification](experiment-spec.md)을 기준으로 최소 형태를 합의하고 Merge한 뒤 병렬 구현합니다. 소유권은 조정 책임을 뜻하며 다른 팀원의 수정을 금지하지 않습니다.
 
 두 병렬 Issue가 데이터를 주고받아야 한다면 먼저 경계에 필요한 최소 데이터만 합의합니다. 해당 계약을 별도 선행 Issue로 Merge한 뒤 양쪽 구현을 시작합니다. 병렬 작업을 시작하기 위해 사용하지 않을 Interface를 미리 만들지 않습니다.
 
