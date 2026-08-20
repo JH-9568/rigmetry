@@ -34,7 +34,16 @@ Task Runner → Evaluator → Run Result / Metrics
 
 Provider 중립 요청을 Provider API 형식으로 바꾸고 응답과 Token usage를 프로젝트 내부 타입으로 정규화합니다. Provider SDK 객체, 인증 정보, API 오류가 Runtime 경계를 넘어가면 안 됩니다.
 
-OpenAI-compatible과 DeepSeek는 MVP 기준 대상이지만 공통 Protocol로 처리할 수 있는 부분을 중복 구현하지 않습니다.
+MVP는 OpenAI-compatible Adapter와 Ollama Native Adapter를 구현 대상으로 둡니다. DeepSeek처럼 OpenAI 호환 API를 제공하는 서비스는 별도 Adapter를 만들지 않고 OpenAI-compatible 설정으로 처리합니다.
+
+#### MVP Provider 경계
+
+- **OpenAI-compatible Adapter**: OpenAI 호환 요청·응답과 Credential 주입을 담당합니다.
+- **Ollama Native Adapter**: 로컬 Ollama의 Native `/api/chat` 요청·응답을 담당합니다. OpenAI 호환 Endpoint를 경유하지 않습니다.
+
+Ollama 응답의 `prompt_eval_count`와 `eval_count`는 각각 내부 input/output Token으로 정규화하고, Provider가 제공하는 실행 시간 값은 Provider metric으로 보존하는 방향입니다. 정확한 필드와 Streaming 처리 방식은 구현 Issue에서 고정합니다.
+
+이 구분은 Adapter 수를 늘리기 위한 것이 아니라 원격 Credential 기반 API와 로컬 Runtime이라는 실제로 다른 경계를 최소 두 개로 검증하기 위한 것입니다. 참고: [Ollama Chat API](https://docs.ollama.com/api/chat), [Ollama Usage](https://docs.ollama.com/api/usage).
 
 ### MCP Manager (`mcp`)
 

@@ -36,7 +36,7 @@ Issue 없이 새 핵심 기능을 만들지 않습니다.
 
 ## Architecture 규칙
 
-- `runtime`은 구체적인 OpenAI, DeepSeek 또는 MCP Client 구현에 직접 의존하지 않습니다.
+- `runtime`은 구체적인 OpenAI-compatible, Ollama 또는 MCP Client 구현에 직접 의존하지 않습니다.
 - Provider 응답, 오류와 Token usage는 Adapter 경계에서 내부 타입으로 변환합니다.
 - Credential은 환경변수에서 Runtime에만 주입하고 Config, Lock, DB, Trace, 로그, Report에 저장하지 않습니다.
 - `run_id`, `harness_digest`, `task_digest`, `environment_digest`를 혼용하지 않습니다.

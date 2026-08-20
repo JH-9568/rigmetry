@@ -8,8 +8,8 @@
 name: coding-basic
 
 model:
-  provider: deepseek
-  model: deepseek-chat
+  provider: ollama
+  model: qwen3:8b
 
 system_prompt: >
   변경 전 테스트를 실행하고 실패 원인을 확인한 뒤 최소한으로 수정하라.
@@ -37,10 +37,33 @@ Report에서 Harness Variant를 구분할 이름입니다. 개별 Run 식별자�
 
 ### `model`
 
-- `provider`: Model Adapter 식별자
+- `provider`: Model Adapter 식별자. MVP 목표 값은 `openai-compatible`, `ollama`입니다.
 - `model`: Provider에 전달할 Model 식별자
+- `base_url`: 기본 Endpoint를 덮어쓸 때 사용하는 선택 필드
+- `api_key_env`: Credential 값이 아니라 읽을 환경변수 이름을 지정하는 선택 필드
 
-Provider별 옵션은 내부 Runtime 계약과 분리해야 합니다. API Key와 Credential은 이 Config에 허용하지 않습니다.
+Provider별 옵션은 내부 Runtime 계약과 분리해야 합니다. API Key와 Credential 값은 이 Config에 허용하지 않습니다. `api_key_env`에는 환경변수 이름만 기록하며, Ollama 로컬 실행에는 기본적으로 Credential이 필요하지 않습니다.
+
+OpenAI-compatible 원격 API의 목표 예시는 다음과 같습니다.
+
+```yaml
+model:
+  provider: openai-compatible
+  model: gpt-4.1-mini
+  base_url: https://api.openai.com/v1
+  api_key_env: OPENAI_API_KEY
+```
+
+Ollama는 Adapter 경계를 검증하기 위해 OpenAI 호환 Endpoint가 아닌 Native API를 사용하는 방향입니다.
+
+```yaml
+model:
+  provider: ollama
+  model: qwen3:8b
+  base_url: http://localhost:11434
+```
+
+DeepSeek처럼 OpenAI 호환 API를 제공하는 서비스는 전용 Adapter가 아니라 `openai-compatible`의 `base_url`, `model`, `api_key_env` 설정으로 연결합니다. 지원 Endpoint, 기본 URL과 필수 옵션은 Model Adapter 구현 Issue에서 확정합니다.
 
 ### `system_prompt`
 
@@ -75,8 +98,8 @@ Skill 지침 파일 경로 목록입니다. 상대 경로는 Harness 파일 위�
   "schema_version": 1,
   "harness_digest": "sha256:...",
   "model": {
-    "provider": "deepseek",
-    "model": "deepseek-chat"
+    "provider": "ollama",
+    "model": "qwen3:8b"
   },
   "artifacts": {
     "system_prompt": "sha256:...",
