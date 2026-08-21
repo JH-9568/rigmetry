@@ -49,6 +49,8 @@ Task 원본 디렉터리입니다. 상대 경로 기준은 Config Loader 구현 
 
 Task digest에 Workspace 전체를 포함할지, Git commit과 Fixture Manifest를 사용할지는 Workspace 구현 Issue에서 결정합니다.
 
+현재 Config Lock은 Workspace 내부 파일의 상대 경로와 content digest로 Fixture Manifest digest를 계산합니다. `.git`은 제외하고 symlink는 거부합니다. disposable 사본 생성과 Git revision 전략은 Workspace 구현 Issue에서 확장합니다.
+
 ### `prompt`
 
 Agent에 전달할 작업 지시문입니다. Evaluator Secret이나 Provider Credential을 포함하면 안 됩니다.
@@ -71,3 +73,7 @@ Result는 최소한 다음을 구분할 예정입니다.
 - Token, 호출 수, 단계 수, 실행 시간
 
 정확한 집계 방식은 [Experiment Model](experiment-model.md)을 따릅니다.
+
+## 구현 상태
+
+Task Config 검증, Prompt·Workspace Fixture·Evaluator digest와 Task Lock은 구현되어 있습니다. Task Runner, disposable Workspace와 실제 Command Evaluator는 아직 구현되지 않았습니다.

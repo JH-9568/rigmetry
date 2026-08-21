@@ -84,4 +84,4 @@ Credential 값은 Experiment와 Lock에 허용하지 않습니다. Secret은 Har
 
 ## 구현 상태
 
-Experiment Parser, Lock, 반복 실행, 무작위 배치와 Compare는 아직 구현되지 않았습니다.
+Experiment Parser, 참조 Task/Harness Lock, `require_same`·`allow_diff` 검증과 Experiment digest는 구현되어 있습니다. 반복 실행, 무작위 배치 orchestration과 Compare는 아직 구현되지 않았습니다. 세부 Lock 규칙은 [Config와 Lock 구현 가이드](config-lock.md)를 참고하세요.

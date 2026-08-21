@@ -32,6 +32,8 @@ Task Runner → Evaluator → Run Result / Metrics
 
 작성자가 관리하는 YAML과 Rigmetry가 생성하는 Lock은 구분합니다. Lock은 Credential을 포함하지 않으며 같은 입력에 같은 digest가 나와야 합니다. Experiment Lock은 `require_same`, `allow_diff`, 반복 계획과 Run 순서를 고정합니다.
 
+현재 Pydantic Schema, YAML 검증, 참조 Artifact content hash, Experiment control 검사와 canonical Lock 생성은 `rigmetry.config`에 구현되어 있습니다. 정확한 digest 입력과 경로 경계는 [Config와 Lock 구현 가이드](config-lock.md)를 따릅니다.
+
 ### Model Adapter (`models`)
 
 Provider 중립 요청을 Provider API 형식으로 바꾸고 응답과 Token usage를 프로젝트 내부 타입으로 정규화합니다. Provider SDK 객체, 인증 정보, API 오류가 Runtime 경계를 넘어가면 안 됩니다.
