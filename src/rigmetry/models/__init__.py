@@ -1,5 +1,12 @@
 """Provider 중립 Model과 Run 계약."""
 
+from rigmetry.models.adapters import (
+    JsonTransport,
+    ModelAdapterError,
+    OllamaAdapter,
+    OpenAICompatibleAdapter,
+    UrllibJsonTransport,
+)
 from rigmetry.models.contracts import (
     EvaluatorResult,
     MessageRole,
@@ -21,11 +28,15 @@ from rigmetry.models.contracts import (
 
 __all__ = [
     "EvaluatorResult",
+    "JsonTransport",
     "MessageRole",
     "ModelAdapter",
+    "ModelAdapterError",
     "ModelMessage",
     "ModelRequest",
     "ModelResult",
+    "OllamaAdapter",
+    "OpenAICompatibleAdapter",
     "ProviderCapabilities",
     "RunResult",
     "RunTerminationReason",
@@ -35,5 +46,6 @@ __all__ = [
     "ToolCall",
     "ToolDefinition",
     "ToolResult",
+    "UrllibJsonTransport",
     "canonical_json_bytes",
 ]

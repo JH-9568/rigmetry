@@ -129,4 +129,4 @@ Lock에는 요청 Model 설정을 기록합니다. 실제 Run Manifest에는 응
 
 ## 구현 상태
 
-Parser, Validator, 참조 Skill과 Tool/MCP 선언의 content hash 및 Harness Lock 생성은 구현되어 있습니다. 문자열 Tool/MCP 참조는 이름만 고정하며 실제 Registry Schema 연결, Model Adapter와 Runtime은 아직 구현되지 않았습니다. 세부 동작은 [Config와 Lock 구현 가이드](config-lock.md)를 참고하세요.
+Parser, Validator, 참조 Skill과 Tool/MCP 선언의 content hash, Harness Lock, OpenAI-compatible·Ollama Model Adapter와 제한된 Agent Runtime은 구현되어 있습니다. 문자열 Tool/MCP 참조의 실제 Registry Schema 연결과 `rigmetry run` Task Runner는 아직 구현되지 않았습니다. 세부 동작은 [Config와 Lock 구현 가이드](config-lock.md)와 [Model Adapter와 Runtime 구현 가이드](runtime.md)를 참고하세요.

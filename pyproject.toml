@@ -46,6 +46,9 @@ where = ["src"]
 [tool.pytest.ini_options]
 addopts = "-ra"
 testpaths = ["tests"]
+markers = [
+  "integration: 실제 외부 Model Provider를 호출하는 opt-in 테스트",
+]
 
 [tool.ruff]
 target-version = "py311"

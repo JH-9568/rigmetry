@@ -36,12 +36,20 @@ from rigmetry.tracing import EventType, TraceEvent
 ```python
 class ModelAdapter(Protocol):
     @property
+    def name(self) -> str: ...
+
+    @property
+    def version(self) -> str: ...
+
+    @property
     def capabilities(self) -> ProviderCapabilities: ...
 
     async def complete(self, request: ModelRequest) -> ModelResult: ...
 ```
 
 OpenAI-compatible과 Ollama Adapter는 Provider SDK 객체나 원본 응답을 Runtime에 넘기지 않고 `ModelResult`로 정규화해야 합니다. API Key, 인증 Header와 Provider Client 생성 방식은 이 Protocol에 포함하지 않습니다.
+
+Tool loop를 위해 `ModelMessage`는 Provider 중립 `tool_calls`, `tool_call_id`, `tool_name`을 선택적으로 가집니다. OpenAI-compatible Adapter는 call ID를, Ollama Native Adapter는 Tool 이름을 사용해 각 Provider 메시지로 변환합니다.
 
 `ProviderCapabilities`는 실행 가능성의 사전 확인용입니다. `token_usage=True`여도 개별 응답의 모든 Token 항목이 존재한다는 뜻은 아닙니다.
 
@@ -71,6 +79,8 @@ Offline Replay가 외부 호출 없이 같은 Runtime 상태 전이를 수행하
 ```
 
 `total_tokens`와 `total_tokens_source`는 함께 존재하거나 함께 `null`이어야 합니다. Source가 `calculated`이면 입력·출력 Token이 모두 있어야 하고 전체 값은 두 값의 합이어야 합니다. 나머지 세부 Token은 Provider가 보고한 관측값이며 별도의 추정치를 만들지 않습니다.
+
+여러 Model 호출의 total을 Runtime이 합산한 Run Usage는 Source를 `aggregated`로 기록합니다.
 
 ## Event와 hash
 
@@ -112,8 +122,8 @@ Budget 초과와 Evaluator 실패는 예외 문자열로만 남기지 않고 비
 
 ## 아직 고정하지 않은 부분
 
-- 실제 Agent Loop와 Runtime 생성자·실행 메서드
-- Provider별 요청 옵션, 오류 분류와 retry
+- Config에서 Adapter·Runtime을 생성하는 CLI/Task Runner 연결
+- Provider retry와 streaming
 - Event type별 payload Schema와 redaction 구현
 - SQLite Schema와 전체 Event chain 검증
 - Transcript-backed Replay Adapter
