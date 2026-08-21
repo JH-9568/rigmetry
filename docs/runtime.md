@@ -143,10 +143,16 @@ pytest tests/integration/test_providers.py -k ollama
 
 Key 값은 명령 기록이나 공유 로그에 남기지 말고 실제 개발 환경에서는 shell export 또는 비공개 환경 주입을 사용합니다.
 
+## Terminal Tool 연결
+
+`rigmetry.tools.TerminalTool`은 disposable Workspace 경로에 고정된 async callback이며 `ToolCall`을 `ToolResult`로 변환합니다. 명령은 shell 없이 실행되고 모델이 요청한 timeout은 생성 시 지정한 상한을 넘을 수 없습니다. stdout/stderr는 제한되며 부모 Process의 Credential 환경변수는 전달하지 않습니다.
+
+이 경계는 원본 Workspace 보호와 출력·시간 제한을 제공하지만 Container/VM 보안 Sandbox가 아니며 시스템의 다른 경로 접근을 차단하지 않습니다.
+
 ## 아직 구현하지 않은 부분
 
 - `rigmetry run` CLI와 Config→Adapter factory
 - retry, streaming과 병렬 Tool 실행
-- 실제 Terminal Tool, Workspace와 Evaluator 연결
+- Config에서 Terminal Tool, Workspace와 Evaluator를 조립하는 Task Runner
 - SQLite Event/Boundary Transcript 저장
 - Offline Replay와 Compare

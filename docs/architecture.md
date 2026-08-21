@@ -84,6 +84,8 @@ Runtime은 구체적인 Provider SDK와 MCP Transport를 import하지 않습니�
 
 Task별 disposable 작업 사본을 만들고 정리합니다. 원본 Workspace를 변경하지 않고 Rigmetry가 해석하는 경로는 허용 root 안으로 제한합니다. 임시 디렉터리나 Git worktree는 Shell Process의 시스템 접근을 막는 Container/VM 보안 Sandbox가 아니며 그렇게 표현하지 않습니다.
 
+현재 `WorkspaceManager`는 허용 root를 벗어나는 참조와 symlink를 거부하고, `.git`을 제외한 원본 사본을 임시 디렉터리에 만든 뒤 context 종료 시 정리합니다.
+
 ### Task Runner (`tasks`)
 
 Lock 확인, Workspace 준비, Runtime 호출, Evaluator 호출, Result 조립을 담당합니다. Provider 또는 Evaluator의 세부 구현을 직접 포함하지 않습니다.
@@ -99,6 +101,8 @@ Trace는 redacted append-only Event를 기록하고 Event hash chain으로 누�
 ### Evaluator (`evaluation`)
 
 Agent Runtime과 독립적으로 disposable Workspace를 검사합니다. 평가 실패와 Agent 실행 실패를 구분하고, Evaluator timeout도 별도로 기록합니다.
+
+현재 Terminal Tool과 Command Evaluator는 shell 없이 명령을 실행하며 고정 작업 디렉터리, 별도 timeout, stdout/stderr 제한과 최소 환경변수 전달을 적용합니다. 이는 범용 Shell 권한 정책이나 시스템 보안 Sandbox가 아닙니다.
 
 ### Storage (`storage`)
 
