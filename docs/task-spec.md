@@ -1,6 +1,6 @@
 # Task Specification (Draft)
 
-Task는 Harness Variant를 비교할 Workspace, Agent 지시문, 성공 판정 방법을 정의합니다. 현재 Task Runner와 Evaluator는 아직 구현되지 않았습니다.
+Task는 Harness Variant를 비교할 Workspace, Agent 지시문, 성공 판정 방법을 정의합니다. disposable Workspace, Terminal Tool과 Command Evaluator 경계는 구현되어 있으며 Task Runner 연결은 아직 구현되지 않았습니다.
 
 ## 예시
 
@@ -61,7 +61,16 @@ Agent에 전달할 작업 지시문입니다. Evaluator Secret이나 Provider Cr
 - `command`: disposable Workspace에서 실행할 명령
 - `timeout`: Evaluator 최대 실행 시간(초)
 
-Command Evaluator 구현 전에 Process 격리, 출력 크기 제한, exit code 의미와 shell 사용 여부를 명확히 정해야 합니다.
+Command Evaluator와 Terminal Tool은 command 문자열을 `shlex`로 나누고 shell 없이 실행합니다. 따라서 pipe, redirect, `&&` 같은 shell 문법은 해석하지 않습니다. 둘은 다음 실행 경계를 공유합니다.
+
+- 실행 작업 디렉터리는 disposable Workspace로 고정
+- Runtime과 별도의 Tool/Evaluator timeout
+- stdout과 stderr 각각 기본 64 KiB 제한 및 잘림 표시
+- stdin 비활성화
+- 부모 Process의 전체 환경을 복사하지 않고 `PATH`, locale, 임시 `HOME`/`TMPDIR`만 전달
+- timeout 시 Process group 종료
+
+부모 환경을 전달하지 않으므로 Provider Credential을 명령에서 조회할 수 없습니다. 임시 Workspace와 Process 제한은 원본 보호 및 재현성 경계이며 Container/VM 보안 Sandbox가 아닙니다. 실행 명령이 운영체제의 다른 경로에 접근하는 것을 차단하지 않습니다.
 
 ## Result 방향
 
@@ -76,4 +85,4 @@ Result는 최소한 다음을 구분할 예정입니다.
 
 ## 구현 상태
 
-Task Config 검증, Prompt·Workspace Fixture·Evaluator digest와 Task Lock은 구현되어 있습니다. Task Runner, disposable Workspace와 실제 Command Evaluator는 아직 구현되지 않았습니다.
+Task Config 검증, Prompt·Workspace Fixture·Evaluator digest와 Task Lock, disposable Workspace lifecycle, Terminal Tool과 Command Evaluator는 구현되어 있습니다. Config에서 Runtime/Adapter를 구성하는 `rigmetry run` Task Runner와 Result/Event 연결은 아직 구현되지 않았습니다.

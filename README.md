@@ -10,7 +10,7 @@ Model만 같다고 Agent 실행 조건이 같은 것은 아닙니다. System Pro
 
 > 같은 Task, Model과 Budget에서 이 Harness 변경은 성공률과 Token 효율을 어떻게 바꾸는가?
 
-현재 저장소는 **초기 개발 단계(pre-alpha)**입니다. Config 검증·Lock, Model Adapter와 내부 Budgeted Runtime까지 구현되어 있으며 `rigmetry run` Task Runner, Replay와 Compare는 아직 구현되지 않았습니다.
+현재 저장소는 **초기 개발 단계(pre-alpha)**입니다. Config 검증·Lock, Model Adapter와 내부 Budgeted Runtime, disposable Workspace, Terminal Tool과 Command Evaluator까지 구현되어 있으며 `rigmetry run` Task Runner, Replay와 Compare는 아직 구현되지 않았습니다.
 
 ## 핵심 흐름
 
@@ -230,6 +230,9 @@ Runtime은 OpenAI-compatible, Ollama 또는 MCP 구현체를 직접 import하지
 - OpenAI-compatible·Ollama Native Adapter와 환경변수 Credential 주입
 - Capability·Step·timeout·Token Budget을 강제하는 내부 Agent Runtime
 - Model·Tool 상태 전이 Event와 호출별 Model provenance
+- 허용 root 안의 원본을 복사·정리하는 disposable Workspace lifecycle
+- 고정 작업 디렉터리, timeout, 출력 제한과 최소 환경을 적용하는 Terminal Tool
+- Agent Runtime과 별도 timeout·exit code로 판정하는 Command Evaluator
 - Trace Event envelope, vocabulary와 canonical Event hash 계산
 - Harness, Task, Experiment와 Evidence Draft 명세
 - Architecture와 2인 협업 문서
@@ -237,8 +240,8 @@ Runtime은 OpenAI-compatible, Ollama 또는 MCP 구현체를 직접 import하지
 
 아직 구현되지 않음:
 
-- MCP 연결과 Tool 실행
-- `rigmetry run` Task Runner, Disposable Workspace와 Evaluator
+- MCP 연결과 추가 Tool 실행
+- `rigmetry run` Task Runner와 Config→Runtime 연결
 - Event 저장·전체 hash chain 검증, Replay, Metrics, SQLite 저장
 - 반복 Experiment, Harness Compare와 Evidence 검증
 - 실제 Benchmark 결과
