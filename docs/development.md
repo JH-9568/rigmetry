@@ -63,7 +63,8 @@ Rigmetry는 2명이 GitHub Issue를 기준으로 병렬 개발하는 것을 전�
 - 항상 설치와 테스트가 가능한 상태를 유지합니다.
 - 직접 개발, 직접 Commit, force push를 금지합니다.
 - 모든 변경은 PR과 다른 Contributor의 승인 1개를 거칩니다.
-- CI가 구성된 뒤 `pytest`, `ruff check .`를 필수 Check로 지정합니다.
+- GitHub Actions의 Python 3.11 설치, `pytest`, `ruff check .`가 통과해야 합니다.
+- Repository 설정에서 `Python 3.11` Check를 Branch protection의 필수 Check로 지정합니다.
 
 초기 빈 저장소를 생성하는 첫 Commit만 부트스트랩 예외로 `main`에 게시합니다.
 
@@ -141,7 +142,7 @@ GitHub 자동 종료 기능 때문에 `Closes` keyword만 영문으로 유지합
 - 자신의 PR은 다른 Contributor의 승인 없이 Merge하지 않습니다.
 - Reviewer는 동작, 의존 방향, Secret 처리, 테스트, 문서의 구현 상태 표현을 확인합니다.
 - 작성자는 모든 Review thread를 해결하거나 변경하지 않은 이유를 답변합니다.
-- CI 구성 후 `pytest`와 `ruff check .` 통과를 Merge 조건으로 설정합니다.
+- `Python 3.11` CI Check 통과를 Merge 조건으로 설정합니다.
 - 2명 × 7일 MVP에서는 기본적으로 squash merge를 사용합니다.
 - Migration이나 단계별 Commit 보존이 실제로 필요할 때만 merge commit을 선택합니다.
 - Merge 후 Branch를 삭제하고 후속 작업은 새 Issue와 새 Branch에서 진행합니다.
@@ -157,3 +158,15 @@ ruff check .
 ```
 
 지원 기준은 Python 3.11 이상입니다. SQLite는 표준 라이브러리를 사용하므로 별도 DB Service가 필요하지 않습니다.
+
+## CI
+
+`.github/workflows/ci.yml`은 모든 Pull Request와 `main` Push에서 다음을 실행합니다.
+
+```bash
+python -m pip install -e ".[dev]"
+ruff check .
+pytest
+```
+
+Workflow는 `contents: read` 권한만 사용하고 Credential이나 Repository Secret을 요구하지 않습니다. 전체 Python Version Matrix, License 검사, Secret scan과 Release 검증은 제출 통합 Issue에서 추가합니다.
