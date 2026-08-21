@@ -1,5 +1,7 @@
 # Rigmetry
 
+[![CI](https://github.com/JH-9568/rigmetry/actions/workflows/ci.yml/badge.svg)](https://github.com/JH-9568/rigmetry/actions/workflows/ci.yml)
+
 > Lock. Run. Replay. Compare.
 
 Rigmetry는 AI Agent Harness 변경을 content-addressed Lock으로 고정하고, 통제된 반복 실행과 무호출 Replay를 통해 그 변경이 성공률과 Token 효율에 미친 효과를 검증하는 오픈소스 실험 엔진입니다.
@@ -219,6 +221,7 @@ Runtime은 OpenAI-compatible, Ollama 또는 MCP 구현체를 직접 import하지
 현재 구현됨:
 
 - Python Package metadata와 `src` layout
+- Pull Request와 `main` Push에서 설치·Ruff·pytest를 검증하는 GitHub Actions CI
 - `rigmetry validate`, `rigmetry lock` CLI
 - Harness·Task·Experiment Pydantic Schema와 canonical Lock digest
 - Prompt·Skill·Tool/MCP 선언·Workspace Fixture·Evaluator content hash
