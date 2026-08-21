@@ -8,7 +8,7 @@ Model만 같다고 Agent 실행 조건이 같은 것은 아닙니다. System Pro
 
 > 같은 Task, Model과 Budget에서 이 Harness 변경은 성공률과 Token 효율을 어떻게 바꾸는가?
 
-현재 저장소는 **초기 개발 단계(pre-alpha)**입니다. Python Package와 최소 CLI 진입점, Draft 명세만 준비되어 있으며 아래에 설명된 Lock, Run, Replay, Compare 기능은 아직 구현되지 않았습니다.
+현재 저장소는 **초기 개발 단계(pre-alpha)**입니다. Python Package, 공통 실행 계약과 Config 검증·Lock 생성까지 구현되어 있으며 Run, Replay, Compare 기능은 아직 구현되지 않았습니다.
 
 ## 핵심 흐름
 
@@ -88,11 +88,13 @@ python -m venv .venv
 source .venv/bin/activate
 python -m pip install -e ".[dev]"
 rigmetry --help
+rigmetry validate examples/experiments/debugging-skill.yaml
+rigmetry lock examples/experiments/debugging-skill.yaml
 pytest
 ruff check .
 ```
 
-현재 `rigmetry --help`는 CLI 진입점만 검증합니다.
+현재 `validate`와 `lock`은 동작합니다. Agent 실행 관련 명령은 아직 목표 인터페이스입니다.
 
 ## `harness.yaml` 예시
 
@@ -159,16 +161,16 @@ trials:
 
 Experiment는 허용된 Harness 차이와 공유 조건, 반복 계획을 일급 Config로 고정합니다. 자세한 정의는 [Experiment Specification](docs/experiment-spec.md)을 참고하세요.
 
-## 목표 CLI
+## CLI
 
 ```bash
-# Config 검증
+# 구현됨: Config와 참조 Artifact 검증
 rigmetry validate experiment.yaml
 
-# Experiment와 참조 Artifact Lock 생성
+# 구현됨: Experiment와 참조 Artifact Lock 생성
 rigmetry lock experiment.yaml
 
-# 단일 Task 실행
+# 계획됨: 단일 Task 실행
 rigmetry run --harness harness.yaml --task task.yaml
 
 # 기록된 Event를 이용한 offline replay
@@ -182,7 +184,7 @@ rigmetry export <experiment-id> --output evidence/
 rigmetry verify evidence/
 ```
 
-위 명령은 **목표 인터페이스이며 아직 구현되지 않았습니다**. 구현 Issue에서 옵션이 변경될 수 있습니다.
+`run`, `replay`, `compare`, `export`, `verify`는 **목표 인터페이스이며 아직 구현되지 않았습니다**. 구현 Issue에서 옵션이 변경될 수 있습니다.
 
 ## 핵심 지표
 
@@ -217,7 +219,10 @@ Runtime은 OpenAI-compatible, Ollama 또는 MCP 구현체를 직접 import하지
 현재 구현됨:
 
 - Python Package metadata와 `src` layout
-- 최소 `rigmetry` CLI 진입점
+- `rigmetry validate`, `rigmetry lock` CLI
+- Harness·Task·Experiment Pydantic Schema와 canonical Lock digest
+- Prompt·Skill·Tool/MCP 선언·Workspace Fixture·Evaluator content hash
+- Experiment `require_same`, `allow_diff` 검증
 - Provider 중립 Model·Token·Run 공통 계약과 `ModelAdapter` Protocol
 - Trace Event envelope, vocabulary와 canonical Event hash 계산
 - Harness, Task, Experiment와 Evidence Draft 명세
@@ -226,7 +231,6 @@ Runtime은 OpenAI-compatible, Ollama 또는 MCP 구현체를 직접 import하지
 
 아직 구현되지 않음:
 
-- Config Parser, Canonicalization, Lock Manifest
 - Agent Loop와 Model API 호출
 - MCP 연결과 Tool 실행
 - Disposable Workspace와 Evaluator
