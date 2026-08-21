@@ -218,6 +218,8 @@ Runtime은 OpenAI-compatible, Ollama 또는 MCP 구현체를 직접 import하지
 
 - Python Package metadata와 `src` layout
 - 최소 `rigmetry` CLI 진입점
+- Provider 중립 Model·Token·Run 공통 계약과 `ModelAdapter` Protocol
+- Trace Event envelope, vocabulary와 canonical Event hash 계산
 - Harness, Task, Experiment와 Evidence Draft 명세
 - Architecture와 2인 협업 문서
 - 예시 YAML 및 GitHub Issue/PR Template
@@ -228,7 +230,7 @@ Runtime은 OpenAI-compatible, Ollama 또는 MCP 구현체를 직접 import하지
 - Agent Loop와 Model API 호출
 - MCP 연결과 Tool 실행
 - Disposable Workspace와 Evaluator
-- Event Trace, Replay, Metrics, SQLite 저장
+- Event 저장·전체 hash chain 검증, Replay, Metrics, SQLite 저장
 - 반복 Experiment, Harness Compare와 Evidence 검증
 - 실제 Benchmark 결과
 
