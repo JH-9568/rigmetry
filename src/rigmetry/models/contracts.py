@@ -36,6 +36,7 @@ class TokenTotalSource(StrEnum):
 
     PROVIDER = "provider"
     CALCULATED = "calculated"
+    AGGREGATED = "aggregated"
 
 
 class TokenUsage(ContractModel):
@@ -82,12 +83,6 @@ class MessageRole(StrEnum):
     TOOL = "tool"
 
 
-class ModelMessage(ContractModel):
-    role: MessageRole
-    content: str | None = None
-    tool_call_id: str | None = None
-
-
 class ToolDefinition(ContractModel):
     name: str
     description: str = ""
@@ -98,6 +93,14 @@ class ToolCall(ContractModel):
     id: str
     name: str
     arguments: dict[str, JsonValue] = Field(default_factory=dict)
+
+
+class ModelMessage(ContractModel):
+    role: MessageRole
+    content: str | None = None
+    tool_call_id: str | None = None
+    tool_name: str | None = None
+    tool_calls: tuple[ToolCall, ...] = ()
 
 
 class ModelRequest(ContractModel):
@@ -170,6 +173,12 @@ class RunResult(ContractModel):
 @runtime_checkable
 class ModelAdapter(Protocol):
     """Runtime이 구체 Provider 대신 의존하는 최소 Adapter 경계."""
+
+    @property
+    def name(self) -> str: ...
+
+    @property
+    def version(self) -> str: ...
 
     @property
     def capabilities(self) -> ProviderCapabilities: ...

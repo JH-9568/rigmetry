@@ -10,11 +10,12 @@
 4. [docs/experiment-model.md](docs/experiment-model.md): Digest, Event, Replay, Token, Compare와 Evidence 계약
 5. [docs/contracts.md](docs/contracts.md): 구현된 공통 Python 타입과 Package 연결 규칙
 6. [docs/config-lock.md](docs/config-lock.md): 구현된 Schema, Canonicalization과 Lock 규칙
-7. [docs/architecture.md](docs/architecture.md): 모듈 책임과 의존성 방향
-8. [docs/harness-spec.md](docs/harness-spec.md): Harness Draft 명세
-9. [docs/task-spec.md](docs/task-spec.md): Task Draft 명세
-10. [docs/development.md](docs/development.md): 역할, Issue, Branch, Commit, PR 원칙
-11. [CONTRIBUTING.md](CONTRIBUTING.md)와 담당 GitHub Issue
+7. [docs/runtime.md](docs/runtime.md): 구현된 Adapter, Agent Loop, Budget와 Event 규칙
+8. [docs/architecture.md](docs/architecture.md): 모듈 책임과 의존성 방향
+9. [docs/harness-spec.md](docs/harness-spec.md): Harness Draft 명세
+10. [docs/task-spec.md](docs/task-spec.md): Task Draft 명세
+11. [docs/development.md](docs/development.md): 역할, Issue, Branch, Commit, PR 원칙
+12. [CONTRIBUTING.md](CONTRIBUTING.md)와 담당 GitHub Issue
 
 ## 제품 중심
 

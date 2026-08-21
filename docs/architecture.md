@@ -51,6 +51,8 @@ MVP는 OpenAI-compatible Adapter와 Ollama Native Adapter를 구현 대상으로
 
 Ollama 응답의 `prompt_eval_count`와 `eval_count`는 각각 내부 input/output Token으로 정규화하고, Provider가 제공하는 실행 시간 값은 Provider metric으로 보존하는 방향입니다. 정확한 필드와 Streaming 처리 방식은 구현 Issue에서 고정합니다.
 
+현재 OpenAI-compatible `/chat/completions`, Ollama Native `/api/chat` Adapter와 환경변수 Credential 주입이 구현되어 있습니다. Ollama는 `/api/tags`에서 가능한 경우 Model digest를 관측합니다. 자세한 변환 규칙은 [Model Adapter와 Runtime 구현 가이드](runtime.md)를 따릅니다.
+
 이 구분은 Adapter 수를 늘리기 위한 것이 아니라 원격 Credential 기반 API와 로컬 Runtime이라는 실제로 다른 경계를 최소 두 개로 검증하기 위한 것입니다. 참고: [Ollama Chat API](https://docs.ollama.com/api/chat), [Ollama Usage](https://docs.ollama.com/api/usage).
 
 ### MCP Manager (`mcp`)
@@ -75,6 +77,8 @@ Model turn과 Tool 호출을 조정하고 다음 제한을 누적 강제합니�
 - 취소 신호
 
 Runtime은 구체적인 Provider SDK와 MCP Transport를 import하지 않습니다. 모든 중요한 상태 전이는 Trace Event로 내보냅니다.
+
+현재 `AgentRuntime`은 `ModelAdapter`와 async Tool callback만 주입받아 Model→Tool→Model Loop, Capability 사전 검사, Step·timeout·Token Budget과 redacted Event 발행을 수행합니다. Task Runner와 실제 Tool/Evaluator 연결은 아직 구현되지 않았습니다.
 
 ### Workspace Manager (`workspace`)
 

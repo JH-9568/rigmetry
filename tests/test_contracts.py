@@ -40,6 +40,8 @@ def test_unknown_token_usage_stays_null_and_calculated_total_has_a_source() -> N
 
 def test_model_contract_exposes_capabilities_without_accepting_credentials() -> None:
     class FakeAdapter:
+        name = "fake"
+        version = "test"
         capabilities = ProviderCapabilities(tool_calling=True, token_usage=True)
 
         async def complete(self, request: ModelRequest) -> ModelResult:
