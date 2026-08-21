@@ -88,7 +88,8 @@ Provider Adapter는 가능한 값을 다음 공통 형태로 정규화합니다.
   "output_tokens": 2100,
   "total_tokens": 10500,
   "cached_input_tokens": 3200,
-  "reasoning_tokens": null
+  "reasoning_tokens": null,
+  "total_tokens_source": "provider"
 }
 ```
 
@@ -97,6 +98,8 @@ Provider Adapter는 가능한 값을 다음 공통 형태로 정규화합니다.
 - Token usage와 통화 비용은 별도 데이터입니다.
 - 금액 비용은 적용 가능한 원격 Provider에서만 계산하며 가격 출처, 통화와 기준 시점을 함께 기록합니다.
 - 서로 다른 Provider 또는 tokenizer의 Token 수를 동일한 단위로 간주해 직접 순위를 만들지 않습니다.
+
+현재 구현된 Pydantic 타입과 Adapter·Replay 연결 방법은 [공통 계약 구현 가이드](contracts.md)를 따릅니다. `total_tokens_source`는 Provider가 보고한 값이면 `provider`, 입력·출력 값을 Rigmetry가 더한 값이면 `calculated`입니다.
 
 ## Provider Capability
 

@@ -8,11 +8,12 @@
 2. [docs/mvp-plan.md](docs/mvp-plan.md): 담당자, Issue dependency, 7일 일정과 Scope Freeze
 3. [docs/experiment-spec.md](docs/experiment-spec.md): Variant, 통제 조건과 반복 계획
 4. [docs/experiment-model.md](docs/experiment-model.md): Digest, Event, Replay, Token, Compare와 Evidence 계약
-5. [docs/architecture.md](docs/architecture.md): 모듈 책임과 의존성 방향
-6. [docs/harness-spec.md](docs/harness-spec.md): Harness Draft 명세
-7. [docs/task-spec.md](docs/task-spec.md): Task Draft 명세
-8. [docs/development.md](docs/development.md): 역할, Issue, Branch, Commit, PR 원칙
-9. [CONTRIBUTING.md](CONTRIBUTING.md)와 담당 GitHub Issue
+5. [docs/contracts.md](docs/contracts.md): 구현된 공통 Python 타입과 Package 연결 규칙
+6. [docs/architecture.md](docs/architecture.md): 모듈 책임과 의존성 방향
+7. [docs/harness-spec.md](docs/harness-spec.md): Harness Draft 명세
+8. [docs/task-spec.md](docs/task-spec.md): Task Draft 명세
+9. [docs/development.md](docs/development.md): 역할, Issue, Branch, Commit, PR 원칙
+10. [CONTRIBUTING.md](CONTRIBUTING.md)와 담당 GitHub Issue
 
 ## 제품 중심
 

@@ -38,6 +38,8 @@ Provider 중립 요청을 Provider API 형식으로 바꾸고 응답과 Token us
 
 각 Adapter는 Tool calling, Token usage, seed, native model digest 등 지원 Capability를 선언합니다. Runtime 또는 Experiment의 필수 Capability를 충족하지 못하면 외부 호출 전에 거부합니다.
 
+공통 `ModelRequest`, `ModelResult`, `TokenUsage`, `ProviderCapabilities`와 `ModelAdapter` Protocol은 `rigmetry.models`에 구현되어 있습니다. Adapter와 Runtime 구현은 별도 유사 타입을 만들지 않고 [공통 계약 구현 가이드](contracts.md)의 공개 import를 사용합니다.
+
 MVP는 OpenAI-compatible Adapter와 Ollama Native Adapter를 구현 대상으로 둡니다. DeepSeek처럼 OpenAI 호환 API를 제공하는 서비스는 별도 Adapter를 만들지 않고 OpenAI-compatible 설정으로 처리합니다.
 
 #### MVP Provider 경계
@@ -83,6 +85,8 @@ Lock 확인, Workspace 준비, Runtime 호출, Evaluator 호출, Result 조립�
 ### Trace와 Metrics (`tracing`, `metrics`)
 
 Trace는 redacted append-only Event를 기록하고 Event hash chain으로 누락과 순서 변경을 검사합니다. Metrics는 Event와 Provider usage에서 성공 여부, Token, 호출 수, 단계 수, 실행 시간을 계산합니다.
+
+현재 `rigmetry.tracing`에는 Event envelope, vocabulary와 단일 Event hash 계산까지만 구현되어 있습니다. 전체 chain 검증, 저장과 Replay는 아직 구현되지 않았습니다.
 
 측정되지 않은 값과 실제 `0`을 구분해야 하므로 optional usage 값은 `null`을 허용합니다.
 
