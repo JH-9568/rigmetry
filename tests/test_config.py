@@ -117,6 +117,28 @@ def test_skill_and_evaluator_content_change_related_digests(tmp_path: Path) -> N
     assert build_lock(task)["task_digest"] != before_evaluator
 
 
+def test_workspace_digest_ignores_generated_cache_files(tmp_path: Path) -> None:
+    _write(tmp_path / "workspace/source.py", "value = 1")
+    task = _write(
+        tmp_path / "task.yaml",
+        """
+        id: cache-stable
+        workspace: ./workspace
+        prompt: fix it
+        evaluator: {type: command, command: pytest, timeout: 60}
+        """,
+    )
+    before = build_lock(task)
+
+    _write(tmp_path / "workspace/__pycache__/source.cpython-313.pyc", "generated")
+    _write(tmp_path / "workspace/.pytest_cache/state", "generated")
+    _write(tmp_path / "workspace/.coverage", "generated")
+
+    after = build_lock(task)
+    assert after["task_digest"] == before["task_digest"]
+    assert after["workspace"]["file_count"] == before["workspace"]["file_count"] == 1
+
+
 def test_experiment_rejects_difference_outside_allow_diff(tmp_path: Path) -> None:
     _write(tmp_path / "workspace/file.txt", "fixture")
     _write(

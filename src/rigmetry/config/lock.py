@@ -20,6 +20,8 @@ from rigmetry.models import canonical_json_bytes
 from rigmetry.tools import TERMINAL_DEFINITION
 
 SCHEMA_VERSION = 1
+_IGNORED_WORKSPACE_DIRS = {".git", ".mypy_cache", ".pytest_cache", ".ruff_cache", "__pycache__"}
+_IGNORED_WORKSPACE_FILES = {".DS_Store", ".coverage"}
 
 
 class ConfigError(ValueError):
@@ -131,7 +133,9 @@ def _workspace_digest(path: Path) -> tuple[str, int]:
     manifest: list[dict[str, str]] = []
     for candidate in sorted(path.rglob("*")):
         relative = candidate.relative_to(path)
-        if ".git" in relative.parts:
+        if any(part in _IGNORED_WORKSPACE_DIRS for part in relative.parts):
+            continue
+        if candidate.name in _IGNORED_WORKSPACE_FILES or candidate.suffix in {".pyc", ".pyo"}:
             continue
         if candidate.is_symlink():
             raise ConfigError(f"Workspace symlink는 지원하지 않습니다: {relative.as_posix()}")

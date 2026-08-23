@@ -49,7 +49,7 @@ lock = build_lock("experiment.yaml")
 - `prompt`: Agent 작업 지시문
 - `evaluator`: MVP `command`, 명령과 양수 timeout
 
-MVP Lock은 Workspace 파일의 상대 경로와 내용 digest를 정렬한 Fixture Manifest로 계산합니다. `.git` 내부는 제외하고 symlink는 거부합니다. 이는 Workspace revision을 content snapshot으로 식별하는 것이며 disposable Workspace 생성이나 보안 Sandbox를 의미하지 않습니다.
+MVP Lock은 Workspace 파일의 상대 경로와 내용 digest를 정렬한 Fixture Manifest로 계산합니다. `.git`, Python bytecode와 `__pycache__`, pytest/Ruff/Mypy cache, coverage·OS metadata처럼 실행이 만드는 cache는 Lock과 disposable 사본에서 제외하고 symlink는 거부합니다. 이는 Workspace revision을 content snapshot으로 식별하는 것이며 disposable Workspace 생성이나 보안 Sandbox를 의미하지 않습니다.
 
 ### Experiment
 

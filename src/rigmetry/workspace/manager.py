@@ -99,7 +99,17 @@ class WorkspaceManager:
                     resolved_source,
                     destination,
                     symlinks=False,
-                    ignore=shutil.ignore_patterns(".git"),
+                    ignore=shutil.ignore_patterns(
+                        ".git",
+                        ".mypy_cache",
+                        ".pytest_cache",
+                        ".ruff_cache",
+                        "__pycache__",
+                        ".coverage",
+                        ".DS_Store",
+                        "*.pyc",
+                        "*.pyo",
+                    ),
                 )
             except OSError as error:
                 raise WorkspaceError(f"Workspace 사본을 만들 수 없습니다: {error}") from error

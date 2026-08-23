@@ -3,6 +3,7 @@ from pathlib import Path
 
 from rigmetry.config import build_lock
 from rigmetry.evaluation import CommandEvaluator
+from rigmetry.workspace import WorkspaceManager
 
 ROOT = Path(__file__).parents[1]
 BENCHMARKS = ROOT / "benchmarks"
@@ -25,15 +26,16 @@ def test_frozen_benchmarks_only_allow_debugging_skill_diff() -> None:
     assert len(digests) == 3
 
 
-def test_frozen_workspace_defects_are_reproduced_before_agent_runs() -> None:
+def test_frozen_workspace_defects_are_reproduced_before_agent_runs(tmp_path: Path) -> None:
     for name in TASKS:
-        workspace = BENCHMARKS / "fixtures" / name
-        result = asyncio.run(
-            CommandEvaluator(
-                "python -m unittest discover -s tests -q",
-                timeout=10,
-            ).evaluate(workspace)
-        )
+        source = BENCHMARKS / "fixtures" / name
+        with WorkspaceManager(BENCHMARKS, temporary_root=tmp_path).create(source) as workspace:
+            result = asyncio.run(
+                CommandEvaluator(
+                    "python -m unittest discover -s tests -q",
+                    timeout=10,
+                ).evaluate(workspace.path)
+            )
 
         assert result.passed is False
         assert result.exit_code == 1
