@@ -1,0 +1,22 @@
+{
+  "artifacts": {
+    "experiment.lock.json": "sha256:f445e32a7e4a08efb5ab617c9e2587145bd0c60936d78b8762e5ff1fc73a5165",
+    "harness-1-baseline.lock.json": "sha256:16fb07c9f2fe3541dff91119f0fd4eaee106887d861bc18397fec9dd051bf8df",
+    "harness-2-candidate.lock.json": "sha256:1cc475c228f59840af771b4c28e0872d29beaf169f0ab5afd83016cb0b686002",
+    "report.json": "sha256:5e9b0abcf75636bc3c7562771d875b9298f4adca20275c7a2ca4b4c465cbe5cd",
+    "report.md": "sha256:9bfef2bac1fe4e70888cc3a1ada5a91d839119b31a9108078d44ab7abb999065",
+    "runs.sqlite": "sha256:74513f2196ffd00e146498c27236e038c92c03f005bb1c62e37a64988c9786de",
+    "task.lock.json": "sha256:824fcfd2f9d41551595334016b7006ee3c18a69eacc745c9466c6bccfccfbf49"
+  },
+  "evidence_digest": "sha256:1af68089486957163400577af510072c0d62bb30810ec3ca3054bf9041e293e4",
+  "experiment_digest": "sha256:b964461063bf1297de47f6816c8e6f6c460bbf8753ccaad6496f97b451ec898f",
+  "experiment_id": "benchmark-discount-calculation-llama32-3b",
+  "locks": {
+    "experiment": "experiment.lock.json",
+    "harness:baseline": "harness-1-baseline.lock.json",
+    "harness:candidate": "harness-2-candidate.lock.json",
+    "task": "task.lock.json"
+  },
+  "planned_runs": 10,
+  "schema_version": 1
+}

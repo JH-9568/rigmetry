@@ -1,0 +1,27 @@
+{
+  "harness_digest": "sha256:2fe90ebd0123498e30564516423a665f3defd5c39faad71cb56c9601f19c8ab6",
+  "kind": "harness",
+  "mcps": [],
+  "model": {
+    "api_key_env": null,
+    "base_url": "http://localhost:11434",
+    "provider": "ollama",
+    "requested_model": "llama3.2:3b"
+  },
+  "name": "llama32-coding-baseline",
+  "runtime": {
+    "max_steps": 8,
+    "max_total_tokens": 6000,
+    "timeout": 60
+  },
+  "schema_version": 1,
+  "skill_digests": [],
+  "skills": [],
+  "system_prompt_digest": "sha256:19c5d5348f4dc82cdf8627ddd27cb620be6fe4f8f37e510ccada79554501574c",
+  "tools": [
+    {
+      "definition_digest": "sha256:e5d973ea2b1a8c20f0edce863c91bdd3dd376ad68d14fdc98c4e59cb233b9ca5",
+      "name": "terminal"
+    }
+  ]
+}

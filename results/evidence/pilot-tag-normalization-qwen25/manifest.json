@@ -1,0 +1,22 @@
+{
+  "artifacts": {
+    "experiment.lock.json": "sha256:1cc0cb3153e9cb108656d140a0b3ca9ea60d54ad891c401bc18e72832a09d9da",
+    "harness-1-baseline.lock.json": "sha256:7455d4cc4c2ca3949447bf01c340a1763e37094eac3a0dcdb5cb40956dc3ff3f",
+    "harness-2-candidate.lock.json": "sha256:347b2f7bac0f6d99558f1678c61ebd36520d319d16cb7f1c88c6ede867c333da",
+    "report.json": "sha256:ac34c2e2cb702f3945a2eea7a438bc45d296dbc399b7ca93c400d702930b9c33",
+    "report.md": "sha256:e0271c57465e11824a54dc7543655505173c0bf1a950f1807ee4f4e288c7f641",
+    "runs.sqlite": "sha256:efbdb447d6bfe306bfa12ed31c1d9301dfce02064fd18e9e5cb6a54f3e1226dd",
+    "task.lock.json": "sha256:231fac40024d917fb906606dee7ca348f87c3e1b0ef8483786ca2353a0d1b251"
+  },
+  "evidence_digest": "sha256:23185ebfbc3d9b95dcb6a823b9a4c5259e030db388fb08438e9cb716be12e5e6",
+  "experiment_digest": "sha256:287b990ccacfc58a9ed5adc532519a572bcd7cdeb0ad15407811ec1715341ea1",
+  "experiment_id": "benchmark-tag-normalization-qwen25-15b",
+  "locks": {
+    "experiment": "experiment.lock.json",
+    "harness:baseline": "harness-1-baseline.lock.json",
+    "harness:candidate": "harness-2-candidate.lock.json",
+    "task": "task.lock.json"
+  },
+  "planned_runs": 10,
+  "schema_version": 1
+}

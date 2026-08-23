@@ -1,0 +1,22 @@
+{
+  "artifacts": {
+    "experiment.lock.json": "sha256:ccfc2bc683a848ab46fb6b71edec8f5cf066db192dd7fae94e5842b31c693fe0",
+    "harness-1-baseline.lock.json": "sha256:16fb07c9f2fe3541dff91119f0fd4eaee106887d861bc18397fec9dd051bf8df",
+    "harness-2-candidate.lock.json": "sha256:1cc475c228f59840af771b4c28e0872d29beaf169f0ab5afd83016cb0b686002",
+    "report.json": "sha256:1ae86a5e806cd02dc6bf4da5dff96c32f9d5e59f7f0be79d79b85b0245ed0450",
+    "report.md": "sha256:cc68e918b617248c1060d14446d250fcfde65eddd56937e00ea8d471dc9fdb3a",
+    "runs.sqlite": "sha256:79510fb3fd406278f331765e848df94ea148e6f1281878c2c03683dadba52b1e",
+    "task.lock.json": "sha256:41bfb65d8031f3b1065c2ea373f0edcfe01d494017ad593bc0376798b20c7c87"
+  },
+  "evidence_digest": "sha256:228e7de5b901918f86b2bf8e416431c1d935288d38087a48f3d89d64124c4807",
+  "experiment_digest": "sha256:2f11fe33aa332b17cb5b4306d711a71088b7e48fc3cffa6f48236b00ab4ef904",
+  "experiment_id": "benchmark-retry-schedule-llama32-3b",
+  "locks": {
+    "experiment": "experiment.lock.json",
+    "harness:baseline": "harness-1-baseline.lock.json",
+    "harness:candidate": "harness-2-candidate.lock.json",
+    "task": "task.lock.json"
+  },
+  "planned_runs": 10,
+  "schema_version": 1
+}

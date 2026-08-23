@@ -1,0 +1,121 @@
+{
+  "controls": {
+    "allow_diff": [
+      "harness.skills"
+    ],
+    "require_same": [
+      "harness.mcps",
+      "harness.model",
+      "harness.runtime",
+      "harness.system_prompt",
+      "harness.tools",
+      "task"
+    ]
+  },
+  "experiment_digest": "sha256:8839020a411b3893c8bf836f0f3c454e8b0017c9ba74c6c227990dec53dc55f5",
+  "harnesses": {
+    "baseline": {
+      "harness_digest": "sha256:2fe90ebd0123498e30564516423a665f3defd5c39faad71cb56c9601f19c8ab6",
+      "kind": "harness",
+      "mcps": [],
+      "model": {
+        "api_key_env": null,
+        "base_url": "http://localhost:11434",
+        "provider": "ollama",
+        "requested_model": "llama3.2:3b"
+      },
+      "name": "llama32-coding-baseline",
+      "runtime": {
+        "max_steps": 8,
+        "max_total_tokens": 6000,
+        "timeout": 60
+      },
+      "schema_version": 1,
+      "skill_digests": [],
+      "skills": [],
+      "system_prompt_digest": "sha256:19c5d5348f4dc82cdf8627ddd27cb620be6fe4f8f37e510ccada79554501574c",
+      "tools": [
+        {
+          "definition_digest": "sha256:e5d973ea2b1a8c20f0edce863c91bdd3dd376ad68d14fdc98c4e59cb233b9ca5",
+          "name": "terminal"
+        }
+      ]
+    },
+    "candidate": {
+      "harness_digest": "sha256:c06af622ad79f0112ee3a7fe41a63201b69b424f990fe32fdb5f0e6a3a46622d",
+      "kind": "harness",
+      "mcps": [],
+      "model": {
+        "api_key_env": null,
+        "base_url": "http://localhost:11434",
+        "provider": "ollama",
+        "requested_model": "llama3.2:3b"
+      },
+      "name": "llama32-coding-with-debugging-skill",
+      "runtime": {
+        "max_steps": 8,
+        "max_total_tokens": 6000,
+        "timeout": 60
+      },
+      "schema_version": 1,
+      "skill_digests": [
+        "sha256:52c7cbd61d4c6d7e84417355bb4a6c95def2771bf396bd1a346c9f2b2ecc1da0"
+      ],
+      "skills": [
+        {
+          "content_digest": "sha256:52c7cbd61d4c6d7e84417355bb4a6c95def2771bf396bd1a346c9f2b2ecc1da0",
+          "reference": "../skills/debugging/SKILL.md"
+        }
+      ],
+      "system_prompt_digest": "sha256:19c5d5348f4dc82cdf8627ddd27cb620be6fe4f8f37e510ccada79554501574c",
+      "tools": [
+        {
+          "definition_digest": "sha256:e5d973ea2b1a8c20f0edce863c91bdd3dd376ad68d14fdc98c4e59cb233b9ca5",
+          "name": "terminal"
+        }
+      ]
+    }
+  },
+  "id": "benchmark-discount-calculation-llama32-3b",
+  "kind": "experiment",
+  "metrics": [
+    "success_rate",
+    "total_tokens",
+    "steps",
+    "model_calls",
+    "tool_calls",
+    "duration",
+    "termination"
+  ],
+  "schema_version": 1,
+  "task": {
+    "evaluator": {
+      "digest": "sha256:c244591ab066250f6702597c13092e79c65da7a8979e945c532c6ce85209e4b1",
+      "timeout": 20,
+      "type": "command"
+    },
+    "evaluator_digest": "sha256:c244591ab066250f6702597c13092e79c65da7a8979e945c532c6ce85209e4b1",
+    "id": "discount-calculation",
+    "kind": "task",
+    "prompt_digest": "sha256:01efb0817a2c2e6110c020bf0eb80cb17b077d6d7404fb17de3050aaad9e51e2",
+    "schema_version": 1,
+    "task_digest": "sha256:ece56616d4116669edcc012e95718fe36e7b02e366d6d511bbb3037954094bf0",
+    "workspace": {
+      "content_digest": "sha256:c2792d9ac9fe170e100be4b862d57b63f2d93fca444ecdb834d99b9d453e7e74",
+      "file_count": 4,
+      "kind": "fixture",
+      "reference": "../fixtures/discount-calculation"
+    },
+    "workspace_digest": "sha256:c2792d9ac9fe170e100be4b862d57b63f2d93fca444ecdb834d99b9d453e7e74"
+  },
+  "task_digest": "sha256:ece56616d4116669edcc012e95718fe36e7b02e366d6d511bbb3037954094bf0",
+  "trials": {
+    "count": 5,
+    "order": "randomized",
+    "seed": 7202
+  },
+  "variants": {
+    "baseline": "sha256:2fe90ebd0123498e30564516423a665f3defd5c39faad71cb56c9601f19c8ab6",
+    "candidate": "sha256:c06af622ad79f0112ee3a7fe41a63201b69b424f990fe32fdb5f0e6a3a46622d"
+  }
+}

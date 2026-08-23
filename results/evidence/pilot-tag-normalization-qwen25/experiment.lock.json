@@ -1,0 +1,121 @@
+{
+  "controls": {
+    "allow_diff": [
+      "harness.skills"
+    ],
+    "require_same": [
+      "harness.mcps",
+      "harness.model",
+      "harness.runtime",
+      "harness.system_prompt",
+      "harness.tools",
+      "task"
+    ]
+  },
+  "experiment_digest": "sha256:287b990ccacfc58a9ed5adc532519a572bcd7cdeb0ad15407811ec1715341ea1",
+  "harnesses": {
+    "baseline": {
+      "harness_digest": "sha256:24835f2e9dccc034f832151862fd6eb4f1aedff1e218e8b1d5dce9965c7b6749",
+      "kind": "harness",
+      "mcps": [],
+      "model": {
+        "api_key_env": null,
+        "base_url": "http://localhost:11434",
+        "provider": "ollama",
+        "requested_model": "qwen2.5-coder:1.5b"
+      },
+      "name": "ollama-coding-baseline",
+      "runtime": {
+        "max_steps": 8,
+        "max_total_tokens": 6000,
+        "timeout": 120
+      },
+      "schema_version": 1,
+      "skill_digests": [],
+      "skills": [],
+      "system_prompt_digest": "sha256:aafb856791f4096f7217b65d352be384ff40c7ad80455481118e86c06c79ea4f",
+      "tools": [
+        {
+          "definition_digest": "sha256:e5d973ea2b1a8c20f0edce863c91bdd3dd376ad68d14fdc98c4e59cb233b9ca5",
+          "name": "terminal"
+        }
+      ]
+    },
+    "candidate": {
+      "harness_digest": "sha256:8de2eb21828f322da20dacb86880b365d61fb27d71343f1545549291722b4adb",
+      "kind": "harness",
+      "mcps": [],
+      "model": {
+        "api_key_env": null,
+        "base_url": "http://localhost:11434",
+        "provider": "ollama",
+        "requested_model": "qwen2.5-coder:1.5b"
+      },
+      "name": "ollama-coding-with-debugging-skill",
+      "runtime": {
+        "max_steps": 8,
+        "max_total_tokens": 6000,
+        "timeout": 120
+      },
+      "schema_version": 1,
+      "skill_digests": [
+        "sha256:52c7cbd61d4c6d7e84417355bb4a6c95def2771bf396bd1a346c9f2b2ecc1da0"
+      ],
+      "skills": [
+        {
+          "content_digest": "sha256:52c7cbd61d4c6d7e84417355bb4a6c95def2771bf396bd1a346c9f2b2ecc1da0",
+          "reference": "../skills/debugging/SKILL.md"
+        }
+      ],
+      "system_prompt_digest": "sha256:aafb856791f4096f7217b65d352be384ff40c7ad80455481118e86c06c79ea4f",
+      "tools": [
+        {
+          "definition_digest": "sha256:e5d973ea2b1a8c20f0edce863c91bdd3dd376ad68d14fdc98c4e59cb233b9ca5",
+          "name": "terminal"
+        }
+      ]
+    }
+  },
+  "id": "benchmark-tag-normalization-qwen25-15b",
+  "kind": "experiment",
+  "metrics": [
+    "success_rate",
+    "total_tokens",
+    "steps",
+    "model_calls",
+    "tool_calls",
+    "duration",
+    "termination"
+  ],
+  "schema_version": 1,
+  "task": {
+    "evaluator": {
+      "digest": "sha256:c244591ab066250f6702597c13092e79c65da7a8979e945c532c6ce85209e4b1",
+      "timeout": 20,
+      "type": "command"
+    },
+    "evaluator_digest": "sha256:c244591ab066250f6702597c13092e79c65da7a8979e945c532c6ce85209e4b1",
+    "id": "tag-normalization",
+    "kind": "task",
+    "prompt_digest": "sha256:2ddf16fd168132f44ceb4e68c9eecb058741efebb0fe84e2f72e134387cd3a9f",
+    "schema_version": 1,
+    "task_digest": "sha256:a1f14647794c12d9e8d06bca4256d97326d9559a270d02c03987070d0296f07e",
+    "workspace": {
+      "content_digest": "sha256:66b085b601f6ad617fc93c5b25cbf4ff35d7d2bf8b56a4d3f4c903e88e583e27",
+      "file_count": 4,
+      "kind": "fixture",
+      "reference": "../fixtures/tag-normalization"
+    },
+    "workspace_digest": "sha256:66b085b601f6ad617fc93c5b25cbf4ff35d7d2bf8b56a4d3f4c903e88e583e27"
+  },
+  "task_digest": "sha256:a1f14647794c12d9e8d06bca4256d97326d9559a270d02c03987070d0296f07e",
+  "trials": {
+    "count": 5,
+    "order": "randomized",
+    "seed": 7101
+  },
+  "variants": {
+    "baseline": "sha256:24835f2e9dccc034f832151862fd6eb4f1aedff1e218e8b1d5dce9965c7b6749",
+    "candidate": "sha256:8de2eb21828f322da20dacb86880b365d61fb27d71343f1545549291722b4adb"
+  }
+}

@@ -1,4 +1,5 @@
 import asyncio
+import hashlib
 import json
 from pathlib import Path
 
@@ -161,12 +162,16 @@ def test_compare_export_and_verify_use_every_planned_run(tmp_path: Path) -> None
 
     evidence = tmp_path / "evidence"
     manifest = export_evidence(store, "evidence-test", evidence)
+    database_digest = hashlib.sha256((evidence / "runs.sqlite").read_bytes()).hexdigest()
     verified = asyncio.run(verify_evidence(evidence))
+    verified_again = asyncio.run(verify_evidence(evidence))
 
     assert manifest["planned_runs"] == 4
     assert verified["valid"] is True
     assert verified["verified_runs"] == 4
     assert verified["external_calls"] == {"model": 0, "tool": 0, "evaluator": 0}
+    assert verified_again == verified
+    assert hashlib.sha256((evidence / "runs.sqlite").read_bytes()).hexdigest() == database_digest
 
     report_path = evidence / "report.json"
     value = json.loads(report_path.read_text(encoding="utf-8"))

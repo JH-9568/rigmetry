@@ -1,0 +1,20 @@
+{
+  "evaluator": {
+    "digest": "sha256:c244591ab066250f6702597c13092e79c65da7a8979e945c532c6ce85209e4b1",
+    "timeout": 20,
+    "type": "command"
+  },
+  "evaluator_digest": "sha256:c244591ab066250f6702597c13092e79c65da7a8979e945c532c6ce85209e4b1",
+  "id": "retry-schedule",
+  "kind": "task",
+  "prompt_digest": "sha256:a24a6b5813c2edc740a10eebd76d6f83e373402ec8b2b15a456e07a9227de76c",
+  "schema_version": 1,
+  "task_digest": "sha256:a38666ca2dad7b08681b830bee6d3a055f1d047236863cc0e33f3a8e55ed6990",
+  "workspace": {
+    "content_digest": "sha256:ee32fa8b6f0faa207b4ff25c0f150fc2d588e997c77d48e1105959061b0bd270",
+    "file_count": 4,
+    "kind": "fixture",
+    "reference": "../fixtures/retry-schedule"
+  },
+  "workspace_digest": "sha256:ee32fa8b6f0faa207b4ff25c0f150fc2d588e997c77d48e1105959061b0bd270"
+}
