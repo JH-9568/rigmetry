@@ -1,0 +1,20 @@
+{
+  "evaluator": {
+    "digest": "sha256:c244591ab066250f6702597c13092e79c65da7a8979e945c532c6ce85209e4b1",
+    "timeout": 20,
+    "type": "command"
+  },
+  "evaluator_digest": "sha256:c244591ab066250f6702597c13092e79c65da7a8979e945c532c6ce85209e4b1",
+  "id": "tag-normalization",
+  "kind": "task",
+  "prompt_digest": "sha256:2ddf16fd168132f44ceb4e68c9eecb058741efebb0fe84e2f72e134387cd3a9f",
+  "schema_version": 1,
+  "task_digest": "sha256:0f8b76ee7d87de65644b8ee4f95d03e47d2c6b7aaef58675278ec3a8ba36092b",
+  "workspace": {
+    "content_digest": "sha256:dd5c7a2b845e35d9b8dffb9b89ba59a0f784d6abbe5905fc7ff89530f961a6e2",
+    "file_count": 4,
+    "kind": "fixture",
+    "reference": "../fixtures/tag-normalization"
+  },
+  "workspace_digest": "sha256:dd5c7a2b845e35d9b8dffb9b89ba59a0f784d6abbe5905fc7ff89530f961a6e2"
+}

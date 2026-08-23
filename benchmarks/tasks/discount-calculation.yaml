@@ -1,0 +1,9 @@
+id: discount-calculation
+workspace: ../fixtures/discount-calculation
+prompt: >
+  Fix discounted_total so integer percentage discounts are calculated correctly without changing
+  its validation behavior. The focused evaluator is: python -m unittest discover -s tests -q
+evaluator:
+  type: command
+  command: python -m unittest discover -s tests -q
+  timeout: 20

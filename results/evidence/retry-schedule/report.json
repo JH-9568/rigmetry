@@ -1,0 +1,353 @@
+{
+  "controls": {
+    "allow_diff": [
+      "harness.skills"
+    ],
+    "require_same": [
+      "harness.mcps",
+      "harness.model",
+      "harness.runtime",
+      "harness.system_prompt",
+      "harness.tools",
+      "task"
+    ]
+  },
+  "cross_provider_token_ranking": false,
+  "experiment_digest": "sha256:973a77be886c820f6621b97528d875048a4f2fe9b5eaca1836481816093b6c55",
+  "experiment_id": "benchmark-retry-schedule-llama32-3b",
+  "groups": [
+    {
+      "model": "llama3.2:3b",
+      "provider": "ollama",
+      "token_ranking_scope": "within_provider_model_only",
+      "variants": [
+        {
+          "metrics": {
+            "attempts": 5,
+            "duration_ms": {
+              "mean": 6324,
+              "median": 7313,
+              "observed": 5
+            },
+            "model_calls": {
+              "mean": 1.8,
+              "median": 2,
+              "observed": 5
+            },
+            "steps": {
+              "mean": 1.8,
+              "median": 2,
+              "observed": 5
+            },
+            "success_at_budget": 0.0,
+            "successes": 0,
+            "termination_reasons": {
+              "evaluation_failed": 5
+            },
+            "tokens": {
+              "cached_input_tokens": {
+                "mean": null,
+                "median": null,
+                "observed": 0
+              },
+              "input_tokens": {
+                "mean": 944.4,
+                "median": 1102,
+                "observed": 5
+              },
+              "output_tokens": {
+                "mean": 142.6,
+                "median": 172,
+                "observed": 5
+              },
+              "reasoning_tokens": {
+                "mean": null,
+                "median": null,
+                "observed": 0
+              },
+              "total_tokens": {
+                "mean": 1087,
+                "median": 1268,
+                "observed": 5
+              }
+            },
+            "tokens_per_success": null,
+            "tokens_per_success_null_reason": "no_successful_runs",
+            "tool_calls": {
+              "mean": 0.8,
+              "median": 1,
+              "observed": 5
+            }
+          },
+          "pareto": {
+            "dominated_by": [],
+            "status": "indeterminate"
+          },
+          "variant": "baseline"
+        },
+        {
+          "metrics": {
+            "attempts": 5,
+            "duration_ms": {
+              "mean": 9932.6,
+              "median": 12762,
+              "observed": 5
+            },
+            "model_calls": {
+              "mean": 1.6,
+              "median": 2,
+              "observed": 5
+            },
+            "steps": {
+              "mean": 1.6,
+              "median": 2,
+              "observed": 5
+            },
+            "success_at_budget": 0.0,
+            "successes": 0,
+            "termination_reasons": {
+              "evaluation_failed": 5
+            },
+            "tokens": {
+              "cached_input_tokens": {
+                "mean": null,
+                "median": null,
+                "observed": 0
+              },
+              "input_tokens": {
+                "mean": 834.2,
+                "median": 816,
+                "observed": 5
+              },
+              "output_tokens": {
+                "mean": 256.6,
+                "median": 318,
+                "observed": 5
+              },
+              "reasoning_tokens": {
+                "mean": null,
+                "median": null,
+                "observed": 0
+              },
+              "total_tokens": {
+                "mean": 1090.8,
+                "median": 1336,
+                "observed": 5
+              }
+            },
+            "tokens_per_success": null,
+            "tokens_per_success_null_reason": "no_successful_runs",
+            "tool_calls": {
+              "mean": 0.6,
+              "median": 1,
+              "observed": 5
+            }
+          },
+          "pareto": {
+            "dominated_by": [],
+            "status": "indeterminate"
+          },
+          "variant": "candidate"
+        }
+      ]
+    }
+  ],
+  "harness_diff": [
+    {
+      "allowed": true,
+      "path": "harness.skills",
+      "values": {
+        "baseline": [],
+        "candidate": [
+          "sha256:52c7cbd61d4c6d7e84417355bb4a6c95def2771bf396bd1a346c9f2b2ecc1da0"
+        ]
+      }
+    }
+  ],
+  "order_seed": 7203,
+  "planned_runs": 10,
+  "runs": [
+    {
+      "duration_ms": 1729,
+      "evaluator_passed": false,
+      "harness_digest": "sha256:c06af622ad79f0112ee3a7fe41a63201b69b424f990fe32fdb5f0e6a3a46622d",
+      "model": "llama3.2:3b",
+      "model_calls": 1,
+      "order_seed": 7203,
+      "provider": "ollama",
+      "run_id": "benchmark-retry-schedule-llama32-3b-001-candidate",
+      "sequence": 1,
+      "steps": 1,
+      "termination_reason": "evaluation_failed",
+      "tool_calls": 0,
+      "total_tokens": 436,
+      "transcript_digest": "sha256:378053066bb3f0a5b3cb7baca206e90f936e8b920608b5d551a07fa95a3ef66d",
+      "trial": 5,
+      "variant": "candidate"
+    },
+    {
+      "duration_ms": 12762,
+      "evaluator_passed": false,
+      "harness_digest": "sha256:c06af622ad79f0112ee3a7fe41a63201b69b424f990fe32fdb5f0e6a3a46622d",
+      "model": "llama3.2:3b",
+      "model_calls": 2,
+      "order_seed": 7203,
+      "provider": "ollama",
+      "run_id": "benchmark-retry-schedule-llama32-3b-002-candidate",
+      "sequence": 2,
+      "steps": 2,
+      "termination_reason": "evaluation_failed",
+      "tool_calls": 1,
+      "total_tokens": 1597,
+      "transcript_digest": "sha256:1a3093c248f0e06395b4f79ba65fd7cca7b00e7e4278a2936ec58f5790e81a43",
+      "trial": 3,
+      "variant": "candidate"
+    },
+    {
+      "duration_ms": 5595,
+      "evaluator_passed": false,
+      "harness_digest": "sha256:2fe90ebd0123498e30564516423a665f3defd5c39faad71cb56c9601f19c8ab6",
+      "model": "llama3.2:3b",
+      "model_calls": 2,
+      "order_seed": 7203,
+      "provider": "ollama",
+      "run_id": "benchmark-retry-schedule-llama32-3b-003-baseline",
+      "sequence": 3,
+      "steps": 2,
+      "termination_reason": "evaluation_failed",
+      "tool_calls": 1,
+      "total_tokens": 1212,
+      "transcript_digest": "sha256:c82306f00af2c4f1be6c6e535fe85eff643213639abaffe2ec68dd3b5f6a492f",
+      "trial": 5,
+      "variant": "baseline"
+    },
+    {
+      "duration_ms": 15389,
+      "evaluator_passed": false,
+      "harness_digest": "sha256:c06af622ad79f0112ee3a7fe41a63201b69b424f990fe32fdb5f0e6a3a46622d",
+      "model": "llama3.2:3b",
+      "model_calls": 2,
+      "order_seed": 7203,
+      "provider": "ollama",
+      "run_id": "benchmark-retry-schedule-llama32-3b-004-candidate",
+      "sequence": 4,
+      "steps": 2,
+      "termination_reason": "evaluation_failed",
+      "tool_calls": 1,
+      "total_tokens": 1656,
+      "transcript_digest": "sha256:add6748253f826f66f0e8bf86ad6d8873e101ad857a7947b708beb10262ade4c",
+      "trial": 4,
+      "variant": "candidate"
+    },
+    {
+      "duration_ms": 18396,
+      "evaluator_passed": false,
+      "harness_digest": "sha256:c06af622ad79f0112ee3a7fe41a63201b69b424f990fe32fdb5f0e6a3a46622d",
+      "model": "llama3.2:3b",
+      "model_calls": 2,
+      "order_seed": 7203,
+      "provider": "ollama",
+      "run_id": "benchmark-retry-schedule-llama32-3b-005-candidate",
+      "sequence": 5,
+      "steps": 2,
+      "termination_reason": "evaluation_failed",
+      "tool_calls": 1,
+      "total_tokens": 1336,
+      "transcript_digest": "sha256:ba727b269004ec4b18f3ede5bf19e0cc756b686b6c5254c3724e93a1c33e6915",
+      "trial": 2,
+      "variant": "candidate"
+    },
+    {
+      "duration_ms": 9474,
+      "evaluator_passed": false,
+      "harness_digest": "sha256:2fe90ebd0123498e30564516423a665f3defd5c39faad71cb56c9601f19c8ab6",
+      "model": "llama3.2:3b",
+      "model_calls": 2,
+      "order_seed": 7203,
+      "provider": "ollama",
+      "run_id": "benchmark-retry-schedule-llama32-3b-006-baseline",
+      "sequence": 6,
+      "steps": 2,
+      "termination_reason": "evaluation_failed",
+      "tool_calls": 1,
+      "total_tokens": 1318,
+      "transcript_digest": "sha256:99c0da819dad8cec3cc817c199d91ed4ed957c73f76508114b54f5e8b113179b",
+      "trial": 2,
+      "variant": "baseline"
+    },
+    {
+      "duration_ms": 765,
+      "evaluator_passed": false,
+      "harness_digest": "sha256:2fe90ebd0123498e30564516423a665f3defd5c39faad71cb56c9601f19c8ab6",
+      "model": "llama3.2:3b",
+      "model_calls": 1,
+      "order_seed": 7203,
+      "provider": "ollama",
+      "run_id": "benchmark-retry-schedule-llama32-3b-007-baseline",
+      "sequence": 7,
+      "steps": 1,
+      "termination_reason": "evaluation_failed",
+      "tool_calls": 0,
+      "total_tokens": 334,
+      "transcript_digest": "sha256:b094fe8699fb4355593b6c2b79502496543db2d7a9878f03adc41303d48d610d",
+      "trial": 3,
+      "variant": "baseline"
+    },
+    {
+      "duration_ms": 7313,
+      "evaluator_passed": false,
+      "harness_digest": "sha256:2fe90ebd0123498e30564516423a665f3defd5c39faad71cb56c9601f19c8ab6",
+      "model": "llama3.2:3b",
+      "model_calls": 2,
+      "order_seed": 7203,
+      "provider": "ollama",
+      "run_id": "benchmark-retry-schedule-llama32-3b-008-baseline",
+      "sequence": 8,
+      "steps": 2,
+      "termination_reason": "evaluation_failed",
+      "tool_calls": 1,
+      "total_tokens": 1268,
+      "transcript_digest": "sha256:98606b795b72caaaab9d41a98d7a155f552247bcc127aa3266649e7682f0434d",
+      "trial": 4,
+      "variant": "baseline"
+    },
+    {
+      "duration_ms": 8473,
+      "evaluator_passed": false,
+      "harness_digest": "sha256:2fe90ebd0123498e30564516423a665f3defd5c39faad71cb56c9601f19c8ab6",
+      "model": "llama3.2:3b",
+      "model_calls": 2,
+      "order_seed": 7203,
+      "provider": "ollama",
+      "run_id": "benchmark-retry-schedule-llama32-3b-009-baseline",
+      "sequence": 9,
+      "steps": 2,
+      "termination_reason": "evaluation_failed",
+      "tool_calls": 1,
+      "total_tokens": 1303,
+      "transcript_digest": "sha256:793c3f2b057a978bfaa1eabb4eea3979b8f23e37e10e1a8326f392b435fb8cf3",
+      "trial": 1,
+      "variant": "baseline"
+    },
+    {
+      "duration_ms": 1387,
+      "evaluator_passed": false,
+      "harness_digest": "sha256:c06af622ad79f0112ee3a7fe41a63201b69b424f990fe32fdb5f0e6a3a46622d",
+      "model": "llama3.2:3b",
+      "model_calls": 1,
+      "order_seed": 7203,
+      "provider": "ollama",
+      "run_id": "benchmark-retry-schedule-llama32-3b-010-candidate",
+      "sequence": 10,
+      "steps": 1,
+      "termination_reason": "evaluation_failed",
+      "tool_calls": 0,
+      "total_tokens": 429,
+      "transcript_digest": "sha256:8a4c1ce96062879a75e2913f518164fe2b56de843745963ea57f4cd7dd52d333",
+      "trial": 1,
+      "variant": "candidate"
+    }
+  ],
+  "schema_version": 1,
+  "stored_runs": 10
+}

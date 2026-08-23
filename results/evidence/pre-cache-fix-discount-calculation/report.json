@@ -1,0 +1,354 @@
+{
+  "controls": {
+    "allow_diff": [
+      "harness.skills"
+    ],
+    "require_same": [
+      "harness.mcps",
+      "harness.model",
+      "harness.runtime",
+      "harness.system_prompt",
+      "harness.tools",
+      "task"
+    ]
+  },
+  "cross_provider_token_ranking": false,
+  "experiment_digest": "sha256:8839020a411b3893c8bf836f0f3c454e8b0017c9ba74c6c227990dec53dc55f5",
+  "experiment_id": "benchmark-discount-calculation-llama32-3b",
+  "groups": [
+    {
+      "model": "llama3.2:3b",
+      "provider": "ollama",
+      "token_ranking_scope": "within_provider_model_only",
+      "variants": [
+        {
+          "metrics": {
+            "attempts": 5,
+            "duration_ms": {
+              "mean": 7140.6,
+              "median": 8841,
+              "observed": 5
+            },
+            "model_calls": {
+              "mean": 1.6,
+              "median": 2,
+              "observed": 5
+            },
+            "steps": {
+              "mean": 1.6,
+              "median": 2,
+              "observed": 5
+            },
+            "success_at_budget": 0.0,
+            "successes": 0,
+            "termination_reasons": {
+              "evaluation_failed": 5
+            },
+            "tokens": {
+              "cached_input_tokens": {
+                "mean": null,
+                "median": null,
+                "observed": 0
+              },
+              "input_tokens": {
+                "mean": 693.6,
+                "median": 946,
+                "observed": 5
+              },
+              "output_tokens": {
+                "mean": 170.4,
+                "median": 205,
+                "observed": 5
+              },
+              "reasoning_tokens": {
+                "mean": null,
+                "median": null,
+                "observed": 0
+              },
+              "total_tokens": {
+                "mean": 864,
+                "median": 1160,
+                "observed": 5
+              }
+            },
+            "tokens_per_success": null,
+            "tokens_per_success_null_reason": "no_successful_runs",
+            "tool_calls": {
+              "mean": 0.6,
+              "median": 1,
+              "observed": 5
+            }
+          },
+          "pareto": {
+            "dominated_by": [],
+            "status": "indeterminate"
+          },
+          "variant": "baseline"
+        },
+        {
+          "metrics": {
+            "attempts": 5,
+            "duration_ms": {
+              "mean": 16409.6,
+              "median": 11601,
+              "observed": 5
+            },
+            "model_calls": {
+              "mean": 2.8,
+              "median": 2,
+              "observed": 5
+            },
+            "steps": {
+              "mean": 2.8,
+              "median": 2,
+              "observed": 5
+            },
+            "success_at_budget": 0.0,
+            "successes": 0,
+            "termination_reasons": {
+              "evaluation_failed": 4,
+              "token_budget_exceeded": 1
+            },
+            "tokens": {
+              "cached_input_tokens": {
+                "mean": null,
+                "median": null,
+                "observed": 0
+              },
+              "input_tokens": {
+                "mean": 2038.6,
+                "median": 1129,
+                "observed": 5
+              },
+              "output_tokens": {
+                "mean": 407,
+                "median": 293,
+                "observed": 5
+              },
+              "reasoning_tokens": {
+                "mean": null,
+                "median": null,
+                "observed": 0
+              },
+              "total_tokens": {
+                "mean": 2445.6,
+                "median": 1317,
+                "observed": 5
+              }
+            },
+            "tokens_per_success": null,
+            "tokens_per_success_null_reason": "no_successful_runs",
+            "tool_calls": {
+              "mean": 1.8,
+              "median": 1,
+              "observed": 5
+            }
+          },
+          "pareto": {
+            "dominated_by": [],
+            "status": "indeterminate"
+          },
+          "variant": "candidate"
+        }
+      ]
+    }
+  ],
+  "harness_diff": [
+    {
+      "allowed": true,
+      "path": "harness.skills",
+      "values": {
+        "baseline": [],
+        "candidate": [
+          "sha256:52c7cbd61d4c6d7e84417355bb4a6c95def2771bf396bd1a346c9f2b2ecc1da0"
+        ]
+      }
+    }
+  ],
+  "order_seed": 7202,
+  "planned_runs": 10,
+  "runs": [
+    {
+      "duration_ms": 1220,
+      "evaluator_passed": false,
+      "harness_digest": "sha256:2fe90ebd0123498e30564516423a665f3defd5c39faad71cb56c9601f19c8ab6",
+      "model": "llama3.2:3b",
+      "model_calls": 1,
+      "order_seed": 7202,
+      "provider": "ollama",
+      "run_id": "benchmark-discount-calculation-llama32-3b-001-baseline",
+      "sequence": 1,
+      "steps": 1,
+      "termination_reason": "evaluation_failed",
+      "tool_calls": 0,
+      "total_tokens": 336,
+      "transcript_digest": "sha256:c0807c8de5430948db551a389f8749faa133d27d776a642ba9d688f56dec7b46",
+      "trial": 5,
+      "variant": "baseline"
+    },
+    {
+      "duration_ms": 11358,
+      "evaluator_passed": false,
+      "harness_digest": "sha256:c06af622ad79f0112ee3a7fe41a63201b69b424f990fe32fdb5f0e6a3a46622d",
+      "model": "llama3.2:3b",
+      "model_calls": 2,
+      "order_seed": 7202,
+      "provider": "ollama",
+      "run_id": "benchmark-discount-calculation-llama32-3b-002-candidate",
+      "sequence": 2,
+      "steps": 2,
+      "termination_reason": "evaluation_failed",
+      "tool_calls": 1,
+      "total_tokens": 1108,
+      "transcript_digest": "sha256:4e002c7f058327980d326171808b2feea35ffbbc928d1166bd7b0dce3103085a",
+      "trial": 1,
+      "variant": "candidate"
+    },
+    {
+      "duration_ms": 12407,
+      "evaluator_passed": false,
+      "harness_digest": "sha256:2fe90ebd0123498e30564516423a665f3defd5c39faad71cb56c9601f19c8ab6",
+      "model": "llama3.2:3b",
+      "model_calls": 2,
+      "order_seed": 7202,
+      "provider": "ollama",
+      "run_id": "benchmark-discount-calculation-llama32-3b-003-baseline",
+      "sequence": 3,
+      "steps": 2,
+      "termination_reason": "evaluation_failed",
+      "tool_calls": 1,
+      "total_tokens": 1238,
+      "transcript_digest": "sha256:77e09a12fa9b86a8a88ed0a5f47653cf86af50094e6e33b978f56253968b9a82",
+      "trial": 4,
+      "variant": "baseline"
+    },
+    {
+      "duration_ms": 1383,
+      "evaluator_passed": false,
+      "harness_digest": "sha256:2fe90ebd0123498e30564516423a665f3defd5c39faad71cb56c9601f19c8ab6",
+      "model": "llama3.2:3b",
+      "model_calls": 1,
+      "order_seed": 7202,
+      "provider": "ollama",
+      "run_id": "benchmark-discount-calculation-llama32-3b-004-baseline",
+      "sequence": 4,
+      "steps": 1,
+      "termination_reason": "evaluation_failed",
+      "tool_calls": 0,
+      "total_tokens": 336,
+      "transcript_digest": "sha256:d55dc4490fd9eca19b45878c72e6d08bb5a81af17d7685620377a4b4cef7fa38",
+      "trial": 3,
+      "variant": "baseline"
+    },
+    {
+      "duration_ms": 8506,
+      "evaluator_passed": false,
+      "harness_digest": "sha256:c06af622ad79f0112ee3a7fe41a63201b69b424f990fe32fdb5f0e6a3a46622d",
+      "model": "llama3.2:3b",
+      "model_calls": 2,
+      "order_seed": 7202,
+      "provider": "ollama",
+      "run_id": "benchmark-discount-calculation-llama32-3b-005-candidate",
+      "sequence": 5,
+      "steps": 2,
+      "termination_reason": "evaluation_failed",
+      "tool_calls": 1,
+      "total_tokens": 1317,
+      "transcript_digest": "sha256:30e6e822f86b9b25ca16dc96157621ff59ce99a6b38ff0d9f33922cd5600bb85",
+      "trial": 4,
+      "variant": "candidate"
+    },
+    {
+      "duration_ms": 37728,
+      "evaluator_passed": false,
+      "harness_digest": "sha256:c06af622ad79f0112ee3a7fe41a63201b69b424f990fe32fdb5f0e6a3a46622d",
+      "model": "llama3.2:3b",
+      "model_calls": 6,
+      "order_seed": 7202,
+      "provider": "ollama",
+      "run_id": "benchmark-discount-calculation-llama32-3b-006-candidate",
+      "sequence": 6,
+      "steps": 6,
+      "termination_reason": "token_budget_exceeded",
+      "tool_calls": 5,
+      "total_tokens": 7248,
+      "transcript_digest": "sha256:bd0acc96232723a1e6459f95c6818e345997a35e866dcb8808928414e46b9fc2",
+      "trial": 3,
+      "variant": "candidate"
+    },
+    {
+      "duration_ms": 11601,
+      "evaluator_passed": false,
+      "harness_digest": "sha256:c06af622ad79f0112ee3a7fe41a63201b69b424f990fe32fdb5f0e6a3a46622d",
+      "model": "llama3.2:3b",
+      "model_calls": 2,
+      "order_seed": 7202,
+      "provider": "ollama",
+      "run_id": "benchmark-discount-calculation-llama32-3b-007-candidate",
+      "sequence": 7,
+      "steps": 2,
+      "termination_reason": "evaluation_failed",
+      "tool_calls": 1,
+      "total_tokens": 1425,
+      "transcript_digest": "sha256:41dec2e7c2877e7646693c679f5a4fe8ee5891623962c04dcb26e8b4431d45f1",
+      "trial": 5,
+      "variant": "candidate"
+    },
+    {
+      "duration_ms": 11852,
+      "evaluator_passed": false,
+      "harness_digest": "sha256:2fe90ebd0123498e30564516423a665f3defd5c39faad71cb56c9601f19c8ab6",
+      "model": "llama3.2:3b",
+      "model_calls": 2,
+      "order_seed": 7202,
+      "provider": "ollama",
+      "run_id": "benchmark-discount-calculation-llama32-3b-008-baseline",
+      "sequence": 8,
+      "steps": 2,
+      "termination_reason": "evaluation_failed",
+      "tool_calls": 1,
+      "total_tokens": 1250,
+      "transcript_digest": "sha256:8822ac36d19fa6ae1ac4f9eb66da857c3255987284aa7eecee35d349f97c784d",
+      "trial": 2,
+      "variant": "baseline"
+    },
+    {
+      "duration_ms": 8841,
+      "evaluator_passed": false,
+      "harness_digest": "sha256:2fe90ebd0123498e30564516423a665f3defd5c39faad71cb56c9601f19c8ab6",
+      "model": "llama3.2:3b",
+      "model_calls": 2,
+      "order_seed": 7202,
+      "provider": "ollama",
+      "run_id": "benchmark-discount-calculation-llama32-3b-009-baseline",
+      "sequence": 9,
+      "steps": 2,
+      "termination_reason": "evaluation_failed",
+      "tool_calls": 1,
+      "total_tokens": 1160,
+      "transcript_digest": "sha256:e4a3118ded5a7039a9038867ab4a5c214d6ee3724ccc7a2e61b8e22fcc30fbbc",
+      "trial": 1,
+      "variant": "baseline"
+    },
+    {
+      "duration_ms": 12855,
+      "evaluator_passed": false,
+      "harness_digest": "sha256:c06af622ad79f0112ee3a7fe41a63201b69b424f990fe32fdb5f0e6a3a46622d",
+      "model": "llama3.2:3b",
+      "model_calls": 2,
+      "order_seed": 7202,
+      "provider": "ollama",
+      "run_id": "benchmark-discount-calculation-llama32-3b-010-candidate",
+      "sequence": 10,
+      "steps": 2,
+      "termination_reason": "evaluation_failed",
+      "tool_calls": 1,
+      "total_tokens": 1130,
+      "transcript_digest": "sha256:cb9e58e2bd59e62c72a21254ab2dccbca58e2bed257dce395b01ee96930739d9",
+      "trial": 2,
+      "variant": "candidate"
+    }
+  ],
+  "schema_version": 1,
+  "stored_runs": 10
+}

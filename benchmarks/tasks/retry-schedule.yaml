@@ -1,0 +1,9 @@
+id: retry-schedule
+workspace: ../fixtures/retry-schedule
+prompt: >
+  Fix retry_delays so it returns delays only between attempts while preserving exponential backoff
+  and input validation. The focused evaluator is: python -m unittest discover -s tests -q
+evaluator:
+  type: command
+  command: python -m unittest discover -s tests -q
+  timeout: 20

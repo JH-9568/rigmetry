@@ -1,0 +1,353 @@
+{
+  "controls": {
+    "allow_diff": [
+      "harness.skills"
+    ],
+    "require_same": [
+      "harness.mcps",
+      "harness.model",
+      "harness.runtime",
+      "harness.system_prompt",
+      "harness.tools",
+      "task"
+    ]
+  },
+  "cross_provider_token_ranking": false,
+  "experiment_digest": "sha256:54e610d38e3131d4dd57d3c97b60998a7e1144dda15e1eb115ae1351a99f3c76",
+  "experiment_id": "benchmark-tag-normalization-llama32-3b",
+  "groups": [
+    {
+      "model": "llama3.2:3b",
+      "provider": "ollama",
+      "token_ranking_scope": "within_provider_model_only",
+      "variants": [
+        {
+          "metrics": {
+            "attempts": 5,
+            "duration_ms": {
+              "mean": 3590,
+              "median": 1411,
+              "observed": 5
+            },
+            "model_calls": {
+              "mean": 1.4,
+              "median": 1,
+              "observed": 5
+            },
+            "steps": {
+              "mean": 1.4,
+              "median": 1,
+              "observed": 5
+            },
+            "success_at_budget": 0.0,
+            "successes": 0,
+            "termination_reasons": {
+              "evaluation_failed": 5
+            },
+            "tokens": {
+              "cached_input_tokens": {
+                "mean": null,
+                "median": null,
+                "observed": 0
+              },
+              "input_tokens": {
+                "mean": 538.8,
+                "median": 308,
+                "observed": 5
+              },
+              "output_tokens": {
+                "mean": 91.8,
+                "median": 35,
+                "observed": 5
+              },
+              "reasoning_tokens": {
+                "mean": null,
+                "median": null,
+                "observed": 0
+              },
+              "total_tokens": {
+                "mean": 630.6,
+                "median": 343,
+                "observed": 5
+              }
+            },
+            "tokens_per_success": null,
+            "tokens_per_success_null_reason": "no_successful_runs",
+            "tool_calls": {
+              "mean": 0.4,
+              "median": 0,
+              "observed": 5
+            }
+          },
+          "pareto": {
+            "dominated_by": [],
+            "status": "indeterminate"
+          },
+          "variant": "baseline"
+        },
+        {
+          "metrics": {
+            "attempts": 5,
+            "duration_ms": {
+              "mean": 1885.4,
+              "median": 1510,
+              "observed": 5
+            },
+            "model_calls": {
+              "mean": 1,
+              "median": 1,
+              "observed": 5
+            },
+            "steps": {
+              "mean": 1,
+              "median": 1,
+              "observed": 5
+            },
+            "success_at_budget": 0.0,
+            "successes": 0,
+            "termination_reasons": {
+              "evaluation_failed": 5
+            },
+            "tokens": {
+              "cached_input_tokens": {
+                "mean": null,
+                "median": null,
+                "observed": 0
+              },
+              "input_tokens": {
+                "mean": 398,
+                "median": 398,
+                "observed": 5
+              },
+              "output_tokens": {
+                "mean": 56.4,
+                "median": 48,
+                "observed": 5
+              },
+              "reasoning_tokens": {
+                "mean": null,
+                "median": null,
+                "observed": 0
+              },
+              "total_tokens": {
+                "mean": 454.4,
+                "median": 446,
+                "observed": 5
+              }
+            },
+            "tokens_per_success": null,
+            "tokens_per_success_null_reason": "no_successful_runs",
+            "tool_calls": {
+              "mean": 0,
+              "median": 0,
+              "observed": 5
+            }
+          },
+          "pareto": {
+            "dominated_by": [],
+            "status": "indeterminate"
+          },
+          "variant": "candidate"
+        }
+      ]
+    }
+  ],
+  "harness_diff": [
+    {
+      "allowed": true,
+      "path": "harness.skills",
+      "values": {
+        "baseline": [],
+        "candidate": [
+          "sha256:52c7cbd61d4c6d7e84417355bb4a6c95def2771bf396bd1a346c9f2b2ecc1da0"
+        ]
+      }
+    }
+  ],
+  "order_seed": 7201,
+  "planned_runs": 10,
+  "runs": [
+    {
+      "duration_ms": 1411,
+      "evaluator_passed": false,
+      "harness_digest": "sha256:2fe90ebd0123498e30564516423a665f3defd5c39faad71cb56c9601f19c8ab6",
+      "model": "llama3.2:3b",
+      "model_calls": 1,
+      "order_seed": 7201,
+      "provider": "ollama",
+      "run_id": "benchmark-tag-normalization-llama32-3b-001-baseline",
+      "sequence": 1,
+      "steps": 1,
+      "termination_reason": "evaluation_failed",
+      "tool_calls": 0,
+      "total_tokens": 343,
+      "transcript_digest": "sha256:301c542e27235e00f27e703e9548b52105b4cdf08cd50f93401cd9cd4aa14692",
+      "trial": 5,
+      "variant": "baseline"
+    },
+    {
+      "duration_ms": 6869,
+      "evaluator_passed": false,
+      "harness_digest": "sha256:2fe90ebd0123498e30564516423a665f3defd5c39faad71cb56c9601f19c8ab6",
+      "model": "llama3.2:3b",
+      "model_calls": 2,
+      "order_seed": 7201,
+      "provider": "ollama",
+      "run_id": "benchmark-tag-normalization-llama32-3b-002-baseline",
+      "sequence": 2,
+      "steps": 2,
+      "termination_reason": "evaluation_failed",
+      "tool_calls": 1,
+      "total_tokens": 1053,
+      "transcript_digest": "sha256:b9c114f1de24502637466cf96e17e8a1ae5fed711760fe1bdc34be2b01d05eff",
+      "trial": 4,
+      "variant": "baseline"
+    },
+    {
+      "duration_ms": 1341,
+      "evaluator_passed": false,
+      "harness_digest": "sha256:c06af622ad79f0112ee3a7fe41a63201b69b424f990fe32fdb5f0e6a3a46622d",
+      "model": "llama3.2:3b",
+      "model_calls": 1,
+      "order_seed": 7201,
+      "provider": "ollama",
+      "run_id": "benchmark-tag-normalization-llama32-3b-003-candidate",
+      "sequence": 3,
+      "steps": 1,
+      "termination_reason": "evaluation_failed",
+      "tool_calls": 0,
+      "total_tokens": 427,
+      "transcript_digest": "sha256:e45af6c37a82b139d1aa86b3bfadc6f01c5fcf19c9a59b108400b1f3323b3386",
+      "trial": 3,
+      "variant": "candidate"
+    },
+    {
+      "duration_ms": 2609,
+      "evaluator_passed": false,
+      "harness_digest": "sha256:c06af622ad79f0112ee3a7fe41a63201b69b424f990fe32fdb5f0e6a3a46622d",
+      "model": "llama3.2:3b",
+      "model_calls": 1,
+      "order_seed": 7201,
+      "provider": "ollama",
+      "run_id": "benchmark-tag-normalization-llama32-3b-004-candidate",
+      "sequence": 4,
+      "steps": 1,
+      "termination_reason": "evaluation_failed",
+      "tool_calls": 0,
+      "total_tokens": 480,
+      "transcript_digest": "sha256:303281a066576d6a06f36ae41172bd6d550632989d6250f1dc8a08a02199710f",
+      "trial": 5,
+      "variant": "candidate"
+    },
+    {
+      "duration_ms": 507,
+      "evaluator_passed": false,
+      "harness_digest": "sha256:c06af622ad79f0112ee3a7fe41a63201b69b424f990fe32fdb5f0e6a3a46622d",
+      "model": "llama3.2:3b",
+      "model_calls": 1,
+      "order_seed": 7201,
+      "provider": "ollama",
+      "run_id": "benchmark-tag-normalization-llama32-3b-005-candidate",
+      "sequence": 5,
+      "steps": 1,
+      "termination_reason": "evaluation_failed",
+      "tool_calls": 0,
+      "total_tokens": 414,
+      "transcript_digest": "sha256:4148f280346d83732d356b5d7d6ff092696ab745a699175accaac1ea7552fbf4",
+      "trial": 1,
+      "variant": "candidate"
+    },
+    {
+      "duration_ms": 1510,
+      "evaluator_passed": false,
+      "harness_digest": "sha256:c06af622ad79f0112ee3a7fe41a63201b69b424f990fe32fdb5f0e6a3a46622d",
+      "model": "llama3.2:3b",
+      "model_calls": 1,
+      "order_seed": 7201,
+      "provider": "ollama",
+      "run_id": "benchmark-tag-normalization-llama32-3b-006-candidate",
+      "sequence": 6,
+      "steps": 1,
+      "termination_reason": "evaluation_failed",
+      "tool_calls": 0,
+      "total_tokens": 446,
+      "transcript_digest": "sha256:812e8d9d6d5f6c612320e7bd9816409186fd3ab8ad60258ac8af168556399a9c",
+      "trial": 2,
+      "variant": "candidate"
+    },
+    {
+      "duration_ms": 8027,
+      "evaluator_passed": false,
+      "harness_digest": "sha256:2fe90ebd0123498e30564516423a665f3defd5c39faad71cb56c9601f19c8ab6",
+      "model": "llama3.2:3b",
+      "model_calls": 2,
+      "order_seed": 7201,
+      "provider": "ollama",
+      "run_id": "benchmark-tag-normalization-llama32-3b-007-baseline",
+      "sequence": 7,
+      "steps": 2,
+      "termination_reason": "evaluation_failed",
+      "tool_calls": 1,
+      "total_tokens": 1089,
+      "transcript_digest": "sha256:5d70975decc818ce78ecd8b388a4c3d930619358a6b6f2b043968294c66a2f7d",
+      "trial": 2,
+      "variant": "baseline"
+    },
+    {
+      "duration_ms": 3460,
+      "evaluator_passed": false,
+      "harness_digest": "sha256:c06af622ad79f0112ee3a7fe41a63201b69b424f990fe32fdb5f0e6a3a46622d",
+      "model": "llama3.2:3b",
+      "model_calls": 1,
+      "order_seed": 7201,
+      "provider": "ollama",
+      "run_id": "benchmark-tag-normalization-llama32-3b-008-candidate",
+      "sequence": 8,
+      "steps": 1,
+      "termination_reason": "evaluation_failed",
+      "tool_calls": 0,
+      "total_tokens": 505,
+      "transcript_digest": "sha256:8448f0252fa94779e320c8a4b66f644e33a369628a9abdb5e7a0ff7779bbd020",
+      "trial": 4,
+      "variant": "candidate"
+    },
+    {
+      "duration_ms": 777,
+      "evaluator_passed": false,
+      "harness_digest": "sha256:2fe90ebd0123498e30564516423a665f3defd5c39faad71cb56c9601f19c8ab6",
+      "model": "llama3.2:3b",
+      "model_calls": 1,
+      "order_seed": 7201,
+      "provider": "ollama",
+      "run_id": "benchmark-tag-normalization-llama32-3b-009-baseline",
+      "sequence": 9,
+      "steps": 1,
+      "termination_reason": "evaluation_failed",
+      "tool_calls": 0,
+      "total_tokens": 332,
+      "transcript_digest": "sha256:3408d50ea135c2842025ffb3b749dec4e13688e6be53c797db77740cd269db58",
+      "trial": 3,
+      "variant": "baseline"
+    },
+    {
+      "duration_ms": 866,
+      "evaluator_passed": false,
+      "harness_digest": "sha256:2fe90ebd0123498e30564516423a665f3defd5c39faad71cb56c9601f19c8ab6",
+      "model": "llama3.2:3b",
+      "model_calls": 1,
+      "order_seed": 7201,
+      "provider": "ollama",
+      "run_id": "benchmark-tag-normalization-llama32-3b-010-baseline",
+      "sequence": 10,
+      "steps": 1,
+      "termination_reason": "evaluation_failed",
+      "tool_calls": 0,
+      "total_tokens": 336,
+      "transcript_digest": "sha256:cbf80fa189c884e66dc6af8d582b0dffb46bc76a528be404e15c30c917a9e909",
+      "trial": 1,
+      "variant": "baseline"
+    }
+  ],
+  "schema_version": 1,
+  "stored_runs": 10
+}

@@ -6,6 +6,8 @@ import asyncio
 import hashlib
 import json
 import re
+import shutil
+import tempfile
 from pathlib import Path
 from typing import Any
 
@@ -232,21 +234,32 @@ async def verify_evidence(source: str | Path) -> dict[str, Any]:
     _verify_lock_digests(lock)
     _verify_controls(lock)
 
-    store = RunStore(root / "runs.sqlite")
-    experiment = store.load_experiment(manifest["experiment_id"])
-    if experiment.lock != lock or experiment.experiment_digest != manifest["experiment_digest"]:
-        raise EvidenceError("SQLite Experiment와 Lock Artifact가 다릅니다")
-    if len(experiment.plan) != manifest["planned_runs"]:
-        raise EvidenceError("계획한 Run 수가 일치하지 않습니다")
-    report = build_report(store, experiment, strict_run_set=True)
-    if _load_json(root / "report.json") != report:
-        raise EvidenceError("Report Metric 재계산 결과가 일치하지 않습니다")
-    if (root / "report.md").read_text(encoding="utf-8") != render_markdown(report):
-        raise EvidenceError("Markdown Report 재계산 결과가 일치하지 않습니다")
-    for item in experiment.plan:
-        replay = await replay_stored_run(store.load_run(str(item["run_id"])))
-        if any(replay.external_calls.model_dump().values()):
-            raise EvidenceError(f"Offline Replay 외부 호출 수가 0이 아닙니다: {replay.run_id}")
+    # RunStore.initialize() ensures the schema and may update SQLite file metadata.
+    # Verification must never mutate a hashed Evidence artifact, so all database
+    # reads happen against a disposable copy.
+    with tempfile.TemporaryDirectory(prefix="rigmetry-verify-") as temporary:
+        database = Path(temporary) / "runs.sqlite"
+        shutil.copy2(root / "runs.sqlite", database)
+        store = RunStore(database)
+        experiment = store.load_experiment(manifest["experiment_id"])
+        if (
+            experiment.lock != lock
+            or experiment.experiment_digest != manifest["experiment_digest"]
+        ):
+            raise EvidenceError("SQLite Experiment와 Lock Artifact가 다릅니다")
+        if len(experiment.plan) != manifest["planned_runs"]:
+            raise EvidenceError("계획한 Run 수가 일치하지 않습니다")
+        report = build_report(store, experiment, strict_run_set=True)
+        if _load_json(root / "report.json") != report:
+            raise EvidenceError("Report Metric 재계산 결과가 일치하지 않습니다")
+        if (root / "report.md").read_text(encoding="utf-8") != render_markdown(report):
+            raise EvidenceError("Markdown Report 재계산 결과가 일치하지 않습니다")
+        for item in experiment.plan:
+            replay = await replay_stored_run(store.load_run(str(item["run_id"])))
+            if any(replay.external_calls.model_dump().values()):
+                raise EvidenceError(
+                    f"Offline Replay 외부 호출 수가 0이 아닙니다: {replay.run_id}"
+                )
     _scan_secrets(root)
     return {
         "valid": True,

@@ -34,6 +34,20 @@ def test_workspace_copy_protects_original_and_is_cleaned_up(tmp_path: Path) -> N
     assert not disposable_path.exists()
 
 
+def test_workspace_copy_excludes_generated_cache_files(tmp_path: Path) -> None:
+    source = tmp_path / "fixture"
+    (source / "__pycache__").mkdir(parents=True)
+    (source / ".pytest_cache").mkdir()
+    (source / "source.py").write_text("value = 1\n", encoding="utf-8")
+    (source / "__pycache__/source.pyc").write_bytes(b"generated")
+    (source / ".pytest_cache/state").write_text("generated", encoding="utf-8")
+
+    with WorkspaceManager(tmp_path).create(source) as workspace:
+        assert (workspace.path / "source.py").is_file()
+        assert not (workspace.path / "__pycache__").exists()
+        assert not (workspace.path / ".pytest_cache").exists()
+
+
 def test_workspace_rejects_escape_and_symlinks(tmp_path: Path) -> None:
     root = tmp_path / "root"
     root.mkdir()

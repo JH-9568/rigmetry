@@ -1,0 +1,20 @@
+{
+  "evaluator": {
+    "digest": "sha256:c244591ab066250f6702597c13092e79c65da7a8979e945c532c6ce85209e4b1",
+    "timeout": 20,
+    "type": "command"
+  },
+  "evaluator_digest": "sha256:c244591ab066250f6702597c13092e79c65da7a8979e945c532c6ce85209e4b1",
+  "id": "discount-calculation",
+  "kind": "task",
+  "prompt_digest": "sha256:01efb0817a2c2e6110c020bf0eb80cb17b077d6d7404fb17de3050aaad9e51e2",
+  "schema_version": 1,
+  "task_digest": "sha256:ece56616d4116669edcc012e95718fe36e7b02e366d6d511bbb3037954094bf0",
+  "workspace": {
+    "content_digest": "sha256:c2792d9ac9fe170e100be4b862d57b63f2d93fca444ecdb834d99b9d453e7e74",
+    "file_count": 4,
+    "kind": "fixture",
+    "reference": "../fixtures/discount-calculation"
+  },
+  "workspace_digest": "sha256:c2792d9ac9fe170e100be4b862d57b63f2d93fca444ecdb834d99b9d453e7e74"
+}

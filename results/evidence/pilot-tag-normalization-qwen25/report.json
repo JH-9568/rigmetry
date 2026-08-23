@@ -1,0 +1,353 @@
+{
+  "controls": {
+    "allow_diff": [
+      "harness.skills"
+    ],
+    "require_same": [
+      "harness.mcps",
+      "harness.model",
+      "harness.runtime",
+      "harness.system_prompt",
+      "harness.tools",
+      "task"
+    ]
+  },
+  "cross_provider_token_ranking": false,
+  "experiment_digest": "sha256:287b990ccacfc58a9ed5adc532519a572bcd7cdeb0ad15407811ec1715341ea1",
+  "experiment_id": "benchmark-tag-normalization-qwen25-15b",
+  "groups": [
+    {
+      "model": "qwen2.5-coder:1.5b",
+      "provider": "ollama",
+      "token_ranking_scope": "within_provider_model_only",
+      "variants": [
+        {
+          "metrics": {
+            "attempts": 5,
+            "duration_ms": {
+              "mean": 820.2,
+              "median": 756,
+              "observed": 5
+            },
+            "model_calls": {
+              "mean": 1,
+              "median": 1,
+              "observed": 5
+            },
+            "steps": {
+              "mean": 1,
+              "median": 1,
+              "observed": 5
+            },
+            "success_at_budget": 0.0,
+            "successes": 0,
+            "termination_reasons": {
+              "evaluation_failed": 5
+            },
+            "tokens": {
+              "cached_input_tokens": {
+                "mean": null,
+                "median": null,
+                "observed": 0
+              },
+              "input_tokens": {
+                "mean": 259,
+                "median": 259,
+                "observed": 5
+              },
+              "output_tokens": {
+                "mean": 37.2,
+                "median": 35,
+                "observed": 5
+              },
+              "reasoning_tokens": {
+                "mean": null,
+                "median": null,
+                "observed": 0
+              },
+              "total_tokens": {
+                "mean": 296.2,
+                "median": 294,
+                "observed": 5
+              }
+            },
+            "tokens_per_success": null,
+            "tokens_per_success_null_reason": "no_successful_runs",
+            "tool_calls": {
+              "mean": 0,
+              "median": 0,
+              "observed": 5
+            }
+          },
+          "pareto": {
+            "dominated_by": [],
+            "status": "indeterminate"
+          },
+          "variant": "baseline"
+        },
+        {
+          "metrics": {
+            "attempts": 5,
+            "duration_ms": {
+              "mean": 1661.8,
+              "median": 839,
+              "observed": 5
+            },
+            "model_calls": {
+              "mean": 1,
+              "median": 1,
+              "observed": 5
+            },
+            "steps": {
+              "mean": 1,
+              "median": 1,
+              "observed": 5
+            },
+            "success_at_budget": 0.0,
+            "successes": 0,
+            "termination_reasons": {
+              "evaluation_failed": 5
+            },
+            "tokens": {
+              "cached_input_tokens": {
+                "mean": null,
+                "median": null,
+                "observed": 0
+              },
+              "input_tokens": {
+                "mean": 349,
+                "median": 349,
+                "observed": 5
+              },
+              "output_tokens": {
+                "mean": 42.2,
+                "median": 34,
+                "observed": 5
+              },
+              "reasoning_tokens": {
+                "mean": null,
+                "median": null,
+                "observed": 0
+              },
+              "total_tokens": {
+                "mean": 391.2,
+                "median": 383,
+                "observed": 5
+              }
+            },
+            "tokens_per_success": null,
+            "tokens_per_success_null_reason": "no_successful_runs",
+            "tool_calls": {
+              "mean": 0,
+              "median": 0,
+              "observed": 5
+            }
+          },
+          "pareto": {
+            "dominated_by": [],
+            "status": "indeterminate"
+          },
+          "variant": "candidate"
+        }
+      ]
+    }
+  ],
+  "harness_diff": [
+    {
+      "allowed": true,
+      "path": "harness.skills",
+      "values": {
+        "baseline": [],
+        "candidate": [
+          "sha256:52c7cbd61d4c6d7e84417355bb4a6c95def2771bf396bd1a346c9f2b2ecc1da0"
+        ]
+      }
+    }
+  ],
+  "order_seed": 7101,
+  "planned_runs": 10,
+  "runs": [
+    {
+      "duration_ms": 4473,
+      "evaluator_passed": false,
+      "harness_digest": "sha256:8de2eb21828f322da20dacb86880b365d61fb27d71343f1545549291722b4adb",
+      "model": "qwen2.5-coder:1.5b",
+      "model_calls": 1,
+      "order_seed": 7101,
+      "provider": "ollama",
+      "run_id": "benchmark-tag-normalization-qwen25-15b-001-candidate",
+      "sequence": 1,
+      "steps": 1,
+      "termination_reason": "evaluation_failed",
+      "tool_calls": 0,
+      "total_tokens": 379,
+      "transcript_digest": "sha256:27eb1e0a48f5fc8ffb5a7962518414b246053163e0a35f60578e69459b7e9b3b",
+      "trial": 2,
+      "variant": "candidate"
+    },
+    {
+      "duration_ms": 720,
+      "evaluator_passed": false,
+      "harness_digest": "sha256:8de2eb21828f322da20dacb86880b365d61fb27d71343f1545549291722b4adb",
+      "model": "qwen2.5-coder:1.5b",
+      "model_calls": 1,
+      "order_seed": 7101,
+      "provider": "ollama",
+      "run_id": "benchmark-tag-normalization-qwen25-15b-002-candidate",
+      "sequence": 2,
+      "steps": 1,
+      "termination_reason": "evaluation_failed",
+      "tool_calls": 0,
+      "total_tokens": 383,
+      "transcript_digest": "sha256:6f9d5e1f6a9fd209cb322b84d37ec3ed89a6f24c8926e517e0350f02035db732",
+      "trial": 1,
+      "variant": "candidate"
+    },
+    {
+      "duration_ms": 1299,
+      "evaluator_passed": false,
+      "harness_digest": "sha256:24835f2e9dccc034f832151862fd6eb4f1aedff1e218e8b1d5dce9965c7b6749",
+      "model": "qwen2.5-coder:1.5b",
+      "model_calls": 1,
+      "order_seed": 7101,
+      "provider": "ollama",
+      "run_id": "benchmark-tag-normalization-qwen25-15b-003-baseline",
+      "sequence": 3,
+      "steps": 1,
+      "termination_reason": "evaluation_failed",
+      "tool_calls": 0,
+      "total_tokens": 309,
+      "transcript_digest": "sha256:172d1cb0f9dc1dc8a4707190155eefe1753da991a27aaf0b1fd67f7300f4942a",
+      "trial": 4,
+      "variant": "baseline"
+    },
+    {
+      "duration_ms": 335,
+      "evaluator_passed": false,
+      "harness_digest": "sha256:24835f2e9dccc034f832151862fd6eb4f1aedff1e218e8b1d5dce9965c7b6749",
+      "model": "qwen2.5-coder:1.5b",
+      "model_calls": 1,
+      "order_seed": 7101,
+      "provider": "ollama",
+      "run_id": "benchmark-tag-normalization-qwen25-15b-004-baseline",
+      "sequence": 4,
+      "steps": 1,
+      "termination_reason": "evaluation_failed",
+      "tool_calls": 0,
+      "total_tokens": 276,
+      "transcript_digest": "sha256:1a1b4216f1bf4a0096dc1f3008f8c52571a0399221d45408bfba75d6b12e5dd1",
+      "trial": 5,
+      "variant": "baseline"
+    },
+    {
+      "duration_ms": 674,
+      "evaluator_passed": false,
+      "harness_digest": "sha256:8de2eb21828f322da20dacb86880b365d61fb27d71343f1545549291722b4adb",
+      "model": "qwen2.5-coder:1.5b",
+      "model_calls": 1,
+      "order_seed": 7101,
+      "provider": "ollama",
+      "run_id": "benchmark-tag-normalization-qwen25-15b-005-candidate",
+      "sequence": 5,
+      "steps": 1,
+      "termination_reason": "evaluation_failed",
+      "tool_calls": 0,
+      "total_tokens": 379,
+      "transcript_digest": "sha256:37670a810434fb90841890098d9d3e51668e4260b18680251bc713d13562f5f4",
+      "trial": 5,
+      "variant": "candidate"
+    },
+    {
+      "duration_ms": 756,
+      "evaluator_passed": false,
+      "harness_digest": "sha256:24835f2e9dccc034f832151862fd6eb4f1aedff1e218e8b1d5dce9965c7b6749",
+      "model": "qwen2.5-coder:1.5b",
+      "model_calls": 1,
+      "order_seed": 7101,
+      "provider": "ollama",
+      "run_id": "benchmark-tag-normalization-qwen25-15b-006-baseline",
+      "sequence": 6,
+      "steps": 1,
+      "termination_reason": "evaluation_failed",
+      "tool_calls": 0,
+      "total_tokens": 294,
+      "transcript_digest": "sha256:662c6dc89d7bdec83100456e7d1ebb33d7781ed588a32185fbb7b43b9c85079d",
+      "trial": 2,
+      "variant": "baseline"
+    },
+    {
+      "duration_ms": 1603,
+      "evaluator_passed": false,
+      "harness_digest": "sha256:8de2eb21828f322da20dacb86880b365d61fb27d71343f1545549291722b4adb",
+      "model": "qwen2.5-coder:1.5b",
+      "model_calls": 1,
+      "order_seed": 7101,
+      "provider": "ollama",
+      "run_id": "benchmark-tag-normalization-qwen25-15b-007-candidate",
+      "sequence": 7,
+      "steps": 1,
+      "termination_reason": "evaluation_failed",
+      "tool_calls": 0,
+      "total_tokens": 426,
+      "transcript_digest": "sha256:216e9737850dd17ca5d5c1bd08fa3815393bcee6410b85ad525dcee377832144",
+      "trial": 3,
+      "variant": "candidate"
+    },
+    {
+      "duration_ms": 839,
+      "evaluator_passed": false,
+      "harness_digest": "sha256:8de2eb21828f322da20dacb86880b365d61fb27d71343f1545549291722b4adb",
+      "model": "qwen2.5-coder:1.5b",
+      "model_calls": 1,
+      "order_seed": 7101,
+      "provider": "ollama",
+      "run_id": "benchmark-tag-normalization-qwen25-15b-008-candidate",
+      "sequence": 8,
+      "steps": 1,
+      "termination_reason": "evaluation_failed",
+      "tool_calls": 0,
+      "total_tokens": 389,
+      "transcript_digest": "sha256:e0dfe5d605d5523cac65b9b1860541860a8678ab00914479d89868cd06061f99",
+      "trial": 4,
+      "variant": "candidate"
+    },
+    {
+      "duration_ms": 717,
+      "evaluator_passed": false,
+      "harness_digest": "sha256:24835f2e9dccc034f832151862fd6eb4f1aedff1e218e8b1d5dce9965c7b6749",
+      "model": "qwen2.5-coder:1.5b",
+      "model_calls": 1,
+      "order_seed": 7101,
+      "provider": "ollama",
+      "run_id": "benchmark-tag-normalization-qwen25-15b-009-baseline",
+      "sequence": 9,
+      "steps": 1,
+      "termination_reason": "evaluation_failed",
+      "tool_calls": 0,
+      "total_tokens": 293,
+      "transcript_digest": "sha256:2341c78e30dcde402b751a55a4dd1fb28a21b54150fab3810ef0d06fdfe81e3a",
+      "trial": 1,
+      "variant": "baseline"
+    },
+    {
+      "duration_ms": 994,
+      "evaluator_passed": false,
+      "harness_digest": "sha256:24835f2e9dccc034f832151862fd6eb4f1aedff1e218e8b1d5dce9965c7b6749",
+      "model": "qwen2.5-coder:1.5b",
+      "model_calls": 1,
+      "order_seed": 7101,
+      "provider": "ollama",
+      "run_id": "benchmark-tag-normalization-qwen25-15b-010-baseline",
+      "sequence": 10,
+      "steps": 1,
+      "termination_reason": "evaluation_failed",
+      "tool_calls": 0,
+      "total_tokens": 309,
+      "transcript_digest": "sha256:2980d91119f197d601b19aec0577a6c521c13fafe34c4c0cbfc75b0027df3570",
+      "trial": 3,
+      "variant": "baseline"
+    }
+  ],
+  "schema_version": 1,
+  "stored_runs": 10
+}

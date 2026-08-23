@@ -1,0 +1,34 @@
+{
+  "harness_digest": "sha256:8de2eb21828f322da20dacb86880b365d61fb27d71343f1545549291722b4adb",
+  "kind": "harness",
+  "mcps": [],
+  "model": {
+    "api_key_env": null,
+    "base_url": "http://localhost:11434",
+    "provider": "ollama",
+    "requested_model": "qwen2.5-coder:1.5b"
+  },
+  "name": "ollama-coding-with-debugging-skill",
+  "runtime": {
+    "max_steps": 8,
+    "max_total_tokens": 6000,
+    "timeout": 120
+  },
+  "schema_version": 1,
+  "skill_digests": [
+    "sha256:52c7cbd61d4c6d7e84417355bb4a6c95def2771bf396bd1a346c9f2b2ecc1da0"
+  ],
+  "skills": [
+    {
+      "content_digest": "sha256:52c7cbd61d4c6d7e84417355bb4a6c95def2771bf396bd1a346c9f2b2ecc1da0",
+      "reference": "../skills/debugging/SKILL.md"
+    }
+  ],
+  "system_prompt_digest": "sha256:aafb856791f4096f7217b65d352be384ff40c7ad80455481118e86c06c79ea4f",
+  "tools": [
+    {
+      "definition_digest": "sha256:e5d973ea2b1a8c20f0edce863c91bdd3dd376ad68d14fdc98c4e59cb233b9ca5",
+      "name": "terminal"
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+id: tag-normalization
+workspace: ../fixtures/tag-normalization
+prompt: >
+  Fix normalize_tag so every run of whitespace becomes one hyphen while existing behavior remains
+  intact. The focused evaluator is: python -m unittest discover -s tests -q
+evaluator:
+  type: command
+  command: python -m unittest discover -s tests -q
+  timeout: 20

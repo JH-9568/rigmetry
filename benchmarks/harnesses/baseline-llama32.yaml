@@ -1,0 +1,24 @@
+name: llama32-coding-baseline
+
+model:
+  provider: ollama
+  model: llama3.2:3b
+  base_url: http://localhost:11434
+
+system_prompt: >
+  You are fixing a small Python project. Inspect the files, run the focused tests, and make the
+  smallest correct change. Use the terminal tool for all inspection, testing, and edits. The
+  terminal runs one process without shell operators or redirects. For portable edits use commands
+  like: python -c "from pathlib import Path; p=Path('file.py');
+  p.write_text(p.read_text().replace('old','new'))". Keep single quotes inside the double-quoted
+  Python code. Check tool errors and retry a corrected command. Finish only after rerunning tests.
+
+mcps: []
+tools:
+  - terminal
+skills: []
+
+runtime:
+  max_steps: 8
+  timeout: 60
+  max_total_tokens: 6000
