@@ -32,7 +32,7 @@ from rigmetry.tracing import (
     validate_event_chain,
 )
 
-SCHEMA_VERSION = 1
+SCHEMA_VERSION = 2
 REDACTED = "[REDACTED]"
 _SENSITIVE_KEYS = {
     "api_key",
@@ -61,6 +61,13 @@ class StoredRun(ContractModel):
     execution: RuntimeExecution
     evaluator: EvaluatorResult | None = None
     transcript_digest: Sha256Digest
+
+
+class StoredExperiment(ContractModel):
+    experiment_id: str
+    experiment_digest: Sha256Digest
+    lock: dict[str, Any]
+    plan: tuple[dict[str, Any], ...]
 
 
 def _digest(value: JsonValue) -> str:
@@ -206,9 +213,78 @@ class RunStore:
                     boundary_json TEXT NOT NULL,
                     PRIMARY KEY (run_id, sequence)
                 );
+                CREATE TABLE IF NOT EXISTS experiments (
+                    experiment_id TEXT PRIMARY KEY,
+                    experiment_digest TEXT NOT NULL UNIQUE,
+                    lock_json TEXT NOT NULL,
+                    plan_json TEXT NOT NULL,
+                    created_at TEXT NOT NULL
+                );
                 """
             )
             connection.execute(f"PRAGMA user_version = {SCHEMA_VERSION}")
+
+    def save_experiment(
+        self,
+        experiment_id: str,
+        experiment_digest: str,
+        lock: dict[str, Any],
+        plan: Iterable[dict[str, Any]],
+    ) -> StoredExperiment:
+        """동결된 실험과 실행 계획을 Run DB에 함께 저장한다."""
+
+        stored = StoredExperiment(
+            experiment_id=experiment_id,
+            experiment_digest=experiment_digest,
+            lock=lock,
+            plan=tuple(plan),
+        )
+        self.initialize()
+        try:
+            with self._connect() as connection:
+                connection.execute(
+                    """
+                    INSERT INTO experiments (
+                        experiment_id, experiment_digest, lock_json, plan_json, created_at
+                    ) VALUES (?, ?, ?, ?, ?)
+                    """,
+                    (
+                        stored.experiment_id,
+                        stored.experiment_digest,
+                        _dump(stored.lock),
+                        _dump(list(stored.plan)),
+                        datetime.now(UTC).isoformat(),
+                    ),
+                )
+        except sqlite3.IntegrityError as error:
+            raise StorageError(f"Experiment를 저장할 수 없습니다: {experiment_id}") from error
+        return stored
+
+    def load_experiment(self, experiment_id: str) -> StoredExperiment:
+        self.initialize()
+        with self._connect() as connection:
+            row = connection.execute(
+                "SELECT * FROM experiments WHERE experiment_id = ?", (experiment_id,)
+            ).fetchone()
+        if row is None:
+            raise StorageError(f"저장된 Experiment를 찾을 수 없습니다: {experiment_id}")
+        try:
+            return StoredExperiment(
+                experiment_id=row["experiment_id"],
+                experiment_digest=row["experiment_digest"],
+                lock=json.loads(row["lock_json"]),
+                plan=tuple(json.loads(row["plan_json"])),
+            )
+        except (json.JSONDecodeError, ValidationError, TypeError) as error:
+            raise StorageError(
+                f"저장된 Experiment 형식이 손상되었습니다: {experiment_id}"
+            ) from error
+
+    def list_run_ids(self) -> tuple[str, ...]:
+        self.initialize()
+        with self._connect() as connection:
+            rows = connection.execute("SELECT run_id FROM runs ORDER BY run_id").fetchall()
+        return tuple(row["run_id"] for row in rows)
 
     def save_execution(
         self,

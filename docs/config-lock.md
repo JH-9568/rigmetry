@@ -40,7 +40,7 @@ lock = build_lock("experiment.yaml")
 - `skills`: Harness 파일 기준 상대 파일 경로
 - `runtime`: 양수인 `max_steps`, `timeout`, `max_total_tokens`
 
-문자열 Tool/MCP는 이름만 고정합니다. Tool Schema나 MCP Capability가 알려진 시점에는 객체 형태로 선언해야 그 내용까지 digest에 포함됩니다. 실제 Registry에서 Schema를 주입하는 연결은 Tool/MCP 구현 Issue에서 담당합니다.
+문자열 MCP는 이름만 고정합니다. 문자열 `terminal` Tool은 내장 Registry의 실제 설명과 Input Schema digest를 Lock에 주입합니다. 다른 Tool Schema나 MCP Capability는 객체 형태로 선언해야 그 내용까지 digest에 포함되며, 현재 Task Runner는 Terminal 외 Tool과 MCP 실행을 사전에 거부합니다.
 
 ### Task
 

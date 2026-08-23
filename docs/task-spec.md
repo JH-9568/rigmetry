@@ -1,6 +1,6 @@
 # Task Specification (Draft)
 
-Task는 Harness Variant를 비교할 Workspace, Agent 지시문, 성공 판정 방법을 정의합니다. disposable Workspace, Terminal Tool과 Command Evaluator 경계는 구현되어 있으며 Task Runner 연결은 아직 구현되지 않았습니다.
+Task는 Harness Variant를 비교할 Workspace, Agent 지시문, 성공 판정 방법을 정의합니다. disposable Workspace, Terminal Tool, Command Evaluator와 SQLite 저장을 연결한 Task Runner가 구현되어 있습니다.
 
 ## 예시
 
@@ -85,4 +85,4 @@ Result는 최소한 다음을 구분할 예정입니다.
 
 ## 구현 상태
 
-Task Config 검증, Prompt·Workspace Fixture·Evaluator digest와 Task Lock, disposable Workspace lifecycle, Terminal Tool과 Command Evaluator는 구현되어 있습니다. Config에서 Runtime/Adapter를 구성하는 `rigmetry run` Task Runner와 Result/Event 연결은 아직 구현되지 않았습니다.
+Task Config 검증, Prompt·Workspace Fixture·Evaluator digest와 Task Lock, disposable Workspace lifecycle, Terminal Tool과 Command Evaluator, Config에서 Adapter/Runtime을 구성해 Result/Event/Boundary를 저장하는 `rigmetry run`이 구현되어 있습니다. MCP 실행과 Terminal 외 추가 Tool Registry는 아직 지원하지 않으며 선언되어 있으면 실행 전에 거부합니다.

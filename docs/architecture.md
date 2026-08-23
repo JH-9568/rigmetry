@@ -78,7 +78,7 @@ Model turn과 Tool 호출을 조정하고 다음 제한을 누적 강제합니�
 
 Runtime은 구체적인 Provider SDK와 MCP Transport를 import하지 않습니다. 모든 중요한 상태 전이는 Trace Event로 내보냅니다.
 
-현재 `AgentRuntime`은 `ModelAdapter`와 async Tool callback만 주입받아 Model→Tool→Model Loop, Capability 사전 검사, Step·timeout·Token Budget과 redacted Event 발행을 수행합니다. Task Runner와 실제 Tool/Evaluator 연결은 아직 구현되지 않았습니다.
+현재 `AgentRuntime`은 `ModelAdapter`와 async Tool callback만 주입받아 Model→Tool→Model Loop, Capability 사전 검사, Step·timeout·Token Budget과 redacted Event 발행을 수행합니다. Task Runner가 disposable Workspace의 Terminal Tool과 독립 Command Evaluator를 연결하고 결과를 SQLite에 저장합니다.
 
 ### Workspace Manager (`workspace`)
 
