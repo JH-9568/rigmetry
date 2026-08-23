@@ -94,7 +94,7 @@ Lock 확인, Workspace 준비, Runtime 호출, Evaluator 호출, Result 조립�
 
 Trace는 redacted append-only Event를 기록하고 Event hash chain으로 누락과 순서 변경을 검사합니다. Metrics는 Event와 Provider usage에서 성공 여부, Token, 호출 수, 단계 수, 실행 시간을 계산합니다.
 
-현재 `rigmetry.tracing`에는 Event envelope, vocabulary와 단일 Event hash 계산까지만 구현되어 있습니다. 전체 chain 검증, 저장과 Replay는 아직 구현되지 않았습니다.
+현재 `rigmetry.tracing`은 Event envelope, vocabulary, 전체 hash chain 검증과 Model·Tool·Evaluator Boundary 계약을 제공하며 `RunStore`가 이를 SQLite에 저장합니다. `rigmetry replay --offline`은 저장 결과만 공급해 기존 `AgentRuntime`의 상태 전이를 재실행합니다. 자세한 저장·검증 경계는 [SQLite Trace와 Offline Replay 구현 가이드](replay.md)를 따릅니다.
 
 측정되지 않은 값과 실제 `0`을 구분해야 하므로 optional usage 값은 `null`을 허용합니다.
 

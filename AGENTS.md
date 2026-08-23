@@ -11,11 +11,12 @@
 5. [docs/contracts.md](docs/contracts.md): 구현된 공통 Python 타입과 Package 연결 규칙
 6. [docs/config-lock.md](docs/config-lock.md): 구현된 Schema, Canonicalization과 Lock 규칙
 7. [docs/runtime.md](docs/runtime.md): 구현된 Adapter, Agent Loop, Budget와 Event 규칙
-8. [docs/architecture.md](docs/architecture.md): 모듈 책임과 의존성 방향
-9. [docs/harness-spec.md](docs/harness-spec.md): Harness Draft 명세
-10. [docs/task-spec.md](docs/task-spec.md): Task Draft 명세
-11. [docs/development.md](docs/development.md): 역할, Issue, Branch, Commit, PR 원칙
-12. [CONTRIBUTING.md](CONTRIBUTING.md)와 담당 GitHub Issue
+8. [docs/replay.md](docs/replay.md): 구현된 SQLite Trace, Boundary Transcript와 Replay 규칙
+9. [docs/architecture.md](docs/architecture.md): 모듈 책임과 의존성 방향
+10. [docs/harness-spec.md](docs/harness-spec.md): Harness Draft 명세
+11. [docs/task-spec.md](docs/task-spec.md): Task Draft 명세
+12. [docs/development.md](docs/development.md): 역할, Issue, Branch, Commit, PR 원칙
+13. [CONTRIBUTING.md](CONTRIBUTING.md)와 담당 GitHub Issue
 
 ## 제품 중심
 
@@ -56,14 +57,13 @@ Issue 없이 새 핵심 기능을 만들지 않습니다.
 
 외부 Model의 live rerun이 같은 응답을 생성한다고 주장하지 않습니다. Config 동일성, 저장된 Model·Tool·Evaluator 결과를 사용하는 Runtime replay, 반복 실험의 통계적 비교와 Evidence 내부 무결성을 구분합니다.
 
-## 현재 구현 금지 범위
+## 담당 Issue 밖 구현 금지 범위
 
 별도 GitHub Issue가 배정되기 전에는 다음 기능을 구현하지 않습니다.
 
-- 실제 Agent Loop와 Model API 호출
-- 실제 MCP 연결과 Tool 실행
-- Disposable Workspace와 Evaluator
-- Event Replay와 Harness Compare
+- 실제 MCP 연결과 Terminal 이외 Tool 추가
+- 반복 Experiment와 Harness Compare
+- Evidence Bundle Export와 Verify
 
 문서의 목표 CLI와 예시 수치를 구현된 기능이나 실제 Benchmark 결과처럼 표현하지 않습니다.
 

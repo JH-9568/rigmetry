@@ -63,7 +63,7 @@ Offline Replay가 외부 호출 없이 같은 Runtime 상태 전이를 수행하
 | Tool | `ToolCall` / `ToolResult` | Tool을 실행하지 않고 저장한 결과를 반환 |
 | Evaluator | `EvaluatorResult` | Command를 실행하지 않고 저장한 판정을 반환 |
 
-현재 계약은 결과 데이터 형태만 정의합니다. Transcript 저장 형식, sequence 일치 검사와 replay Adapter는 Issue #5 범위입니다.
+`RuntimeExecution.boundaries`는 실제 순서의 `ModelBoundary`와 `ToolBoundary`를 반환합니다. `RunStore`는 Evaluator 결과를 마지막 `EvaluatorBoundary`로 저장하고 Transcript-backed Adapter가 같은 요청에 저장 결과를 공급합니다. 저장과 Replay 규칙은 [SQLite Trace와 Offline Replay 구현 가이드](replay.md)를 따릅니다.
 
 ## Token Usage
 
@@ -125,8 +125,6 @@ Budget 초과와 Evaluator 실패는 예외 문자열로만 남기지 않고 비
 - Config에서 Adapter·Runtime을 생성하는 CLI/Task Runner 연결
 - Provider retry와 streaming
 - Event type별 payload Schema와 redaction 구현
-- SQLite Schema와 전체 Event chain 검증
-- Transcript-backed Replay Adapter
 - Evidence Manifest와 `evidence_digest` 계산
 
 공통 필드를 변경해야 하면 먼저 Issue #1 의존 Branch에 알리고 계약 테스트와 이 문서를 같은 PR에서 수정합니다.

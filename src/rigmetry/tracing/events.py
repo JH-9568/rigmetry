@@ -76,3 +76,25 @@ class TraceEvent(ContractModel):
 
     def has_valid_hash(self) -> bool:
         return hmac.compare_digest(self.event_hash, self.compute_hash())
+
+
+class EventChainError(ValueError):
+    """Run Event의 순서 또는 hash 연결이 유효하지 않음."""
+
+
+def validate_event_chain(events: tuple[TraceEvent, ...], *, run_id: str | None = None) -> None:
+    """한 Run의 연속 sequence와 전체 hash chain을 검증한다."""
+
+    if not events:
+        raise EventChainError("Run Event chain이 비어 있습니다")
+    previous_hash = None
+    for sequence, event in enumerate(events):
+        if run_id is not None and event.run_id != run_id:
+            raise EventChainError(f"Event run_id가 일치하지 않습니다: sequence {sequence}")
+        if event.sequence != sequence:
+            raise EventChainError(f"Event sequence가 연속적이지 않습니다: {event.sequence}")
+        if event.previous_event_hash != previous_hash:
+            raise EventChainError(f"이전 Event hash가 일치하지 않습니다: sequence {sequence}")
+        if not event.has_valid_hash():
+            raise EventChainError(f"Event hash가 일치하지 않습니다: sequence {sequence}")
+        previous_hash = event.event_hash

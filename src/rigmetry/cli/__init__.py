@@ -1,5 +1,6 @@
 """Rigmetry 명령줄 진입점."""
 
+import asyncio
 import json
 from pathlib import Path
 from typing import Annotated
@@ -7,6 +8,9 @@ from typing import Annotated
 import typer
 
 from rigmetry.config import ConfigError, build_lock, load_config
+from rigmetry.replay import ReplayError, replay_run
+from rigmetry.storage import RunStore, StorageError
+from rigmetry.tracing import EventChainError
 
 app = typer.Typer(
     name="rigmetry",
@@ -56,3 +60,24 @@ def lock_command(
         return
     output.write_text(rendered, encoding="utf-8")
     typer.echo(f"Lock을 생성했습니다: {output}")
+
+
+@app.command()
+def replay(
+    run_id: str,
+    offline: Annotated[bool, typer.Option("--offline", help="외부 호출 없는 Replay")] = False,
+    database: Annotated[Path, typer.Option("--database", "-d", help="Run SQLite 파일")] = Path(
+        "rigmetry.sqlite3"
+    ),
+) -> None:
+    """저장된 Boundary Transcript로 Runtime을 재생합니다."""
+
+    if not offline:
+        typer.echo("오류: 현재 replay는 --offline 모드만 지원합니다", err=True)
+        raise typer.Exit(code=1)
+    try:
+        report = asyncio.run(replay_run(RunStore(database), run_id))
+    except (EventChainError, StorageError, ReplayError) as error:
+        typer.echo(f"오류: {error}", err=True)
+        raise typer.Exit(code=1) from error
+    typer.echo(json.dumps(report.model_dump(mode="json"), ensure_ascii=False, indent=2))
