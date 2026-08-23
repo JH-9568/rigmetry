@@ -26,9 +26,10 @@ from rigmetry.models import (
     ToolResult,
 )
 from rigmetry.models.contracts import ContractModel
-from rigmetry.tracing import EventType, TraceEvent
+from rigmetry.tracing import EventType, ModelBoundary, RuntimeBoundary, ToolBoundary, TraceEvent
 
 ToolHandler = Callable[[ToolCall], Awaitable[ToolResult]]
+RUNTIME_VERSION = "1"
 
 
 class RuntimeCapabilityError(ValueError):
@@ -75,6 +76,7 @@ class RuntimeExecution(ContractModel):
     final_message: ModelMessage | None = None
     events: tuple[TraceEvent, ...]
     model_provenance: tuple[ModelProvenance, ...] = ()
+    boundaries: tuple[RuntimeBoundary, ...] = ()
 
 
 class _EventLog:
@@ -151,6 +153,7 @@ class AgentRuntime:
         log = _EventLog(request.run_id)
         usages: list[TokenUsage] = []
         provenance: list[ModelProvenance] = []
+        boundaries: list[RuntimeBoundary] = []
         messages = [
             ModelMessage(role=MessageRole.SYSTEM, content=request.system_prompt),
             ModelMessage(role=MessageRole.USER, content=request.prompt),
@@ -158,6 +161,8 @@ class AgentRuntime:
         steps = 0
         model_calls = 0
         tool_calls = 0
+        pending_model_request: ModelRequest | None = None
+        pending_tool_call: ToolCall | None = None
 
         log.emit(
             EventType.RUN_STARTED,
@@ -205,6 +210,7 @@ class AgentRuntime:
                 final_message=final_message,
                 events=tuple(log.events),
                 model_provenance=tuple(provenance),
+                boundaries=tuple(boundaries),
             )
 
         try:
@@ -229,7 +235,30 @@ class AgentRuntime:
                         },
                     )
                     model_calls += 1
-                    model_result = await self.adapter.complete(model_request)
+                    pending_model_request = model_request
+                    try:
+                        model_result = await self.adapter.complete(model_request)
+                    except ModelAdapterError as error:
+                        boundaries.append(
+                            ModelBoundary(
+                                sequence=len(boundaries),
+                                request=model_request,
+                                error_code=error.code,
+                            )
+                        )
+                        pending_model_request = None
+                        return finish(
+                            RunTerminationReason.MODEL_ERROR,
+                            error_code=error.code,
+                        )
+                    pending_model_request = None
+                    boundaries.append(
+                        ModelBoundary(
+                            sequence=len(boundaries),
+                            request=model_request,
+                            result=model_result,
+                        )
+                    )
                     usages.append(model_result.usage)
                     cumulative = _aggregate_usage(usages)
                     provenance.append(
@@ -284,13 +313,32 @@ class AgentRuntime:
                             {"step": step, "call_id": call.id, "tool_name": call.name},
                         )
                         tool_calls += 1
+                        pending_tool_call = call
                         try:
                             tool_result = await self.tool_handler(call)
+                        except TimeoutError:
+                            raise
                         except Exception:
+                            boundaries.append(
+                                ToolBoundary(
+                                    sequence=len(boundaries),
+                                    request=call,
+                                    error_code="tool_execution_failed",
+                                )
+                            )
+                            pending_tool_call = None
                             return finish(
                                 RunTerminationReason.TOOL_ERROR,
                                 error_code="tool_execution_failed",
                             )
+                        pending_tool_call = None
+                        boundaries.append(
+                            ToolBoundary(
+                                sequence=len(boundaries),
+                                request=call,
+                                result=tool_result,
+                            )
+                        )
                         if tool_result.call_id != call.id:
                             return finish(
                                 RunTerminationReason.TOOL_ERROR,
@@ -315,7 +363,21 @@ class AgentRuntime:
                         )
                     log.emit(EventType.STEP_COMPLETED, {"step": step})
         except TimeoutError:
+            if pending_model_request is not None:
+                boundaries.append(
+                    ModelBoundary(
+                        sequence=len(boundaries),
+                        request=pending_model_request,
+                        error_code="timeout_exceeded",
+                    )
+                )
+            elif pending_tool_call is not None:
+                boundaries.append(
+                    ToolBoundary(
+                        sequence=len(boundaries),
+                        request=pending_tool_call,
+                        error_code="timeout_exceeded",
+                    )
+                )
             return finish(RunTerminationReason.TIMEOUT_EXCEEDED)
-        except ModelAdapterError as error:
-            return finish(RunTerminationReason.MODEL_ERROR, error_code=error.code)
         return finish(RunTerminationReason.MAX_STEPS_EXCEEDED)

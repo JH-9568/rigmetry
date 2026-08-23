@@ -104,9 +104,9 @@
 - [ ] `rigmetry run`이 disposable Workspace에서 원본을 변경하지 않고 Task를 실행·평가한다.
 - [ ] Adapter Capability가 Experiment 요구사항을 충족하지 않으면 외부 호출 전에 거부한다.
 - [ ] Step, Timeout, Token Budget 종료 사유를 구분한다.
-- [ ] Event hash chain과 Result가 SQLite에 Credential 없이 저장된다.
-- [ ] `rigmetry replay --offline` 중 Model, Tool과 Evaluator 외부 호출이 0회다.
-- [ ] Replay가 같은 Runtime 상태 전이, 종료 사유와 파생 Metric을 재계산한다.
+- [x] Event hash chain과 Result가 SQLite에 Credential 없이 저장된다.
+- [x] `rigmetry replay --offline` 중 Model, Tool과 Evaluator 외부 호출이 0회다.
+- [x] Replay가 같은 Runtime 상태 전이, 종료 사유와 파생 Metric을 재계산한다.
 - [ ] `rigmetry compare`가 허용된 Diff와 실제 반복 Run으로 `success@budget`과 성공당 Token을 계산한다.
 - [ ] `rigmetry verify evidence/`가 Lock, Event chain, Run 누락과 Report 재계산을 검증한다.
 - [ ] 3 Task × 2 Variant × 5회인 총 30 Run 결과를 공개한다.

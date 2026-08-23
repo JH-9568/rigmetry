@@ -12,7 +12,7 @@ from rigmetry.models import (
     TokenTotalSource,
     TokenUsage,
 )
-from rigmetry.tracing import EventType, TraceEvent
+from rigmetry.tracing import EventChainError, EventType, TraceEvent, validate_event_chain
 
 
 def test_unknown_token_usage_stays_null_and_calculated_total_has_a_source() -> None:
@@ -94,3 +94,8 @@ def test_event_timestamp_must_be_timezone_aware() -> None:
             type=EventType.RUN_STARTED,
             timestamp=datetime(2026, 8, 21, 9, 0),
         )
+
+
+def test_empty_event_chain_is_rejected() -> None:
+    with pytest.raises(EventChainError, match="비어"):
+        validate_event_chain(())

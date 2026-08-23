@@ -12,8 +12,8 @@ from rigmetry.runtime import AgentRuntime, RuntimeLimits, RuntimeRequest
 `AgentRuntime`은 `ModelAdapter` Protocol에만 의존하며 구체 Adapter를 import하지 않습니다. 실제 Tool 연결은 다음 async callback 하나를 주입합니다.
 
 ```python
-async def tool_handler(call: ToolCall) -> ToolResult:
-    ...
+async def tool_handler(call: ToolCall) -> ToolResult: ...
+
 
 runtime = AgentRuntime(adapter, tool_handler)
 execution = await runtime.run(request)
@@ -124,7 +124,7 @@ Runtime은 `run.started`, Step, Model, Tool, `run.finished`/`run.failed` Event�
 - Tool 이름, call ID와 성공 여부
 - 종료 사유와 안전한 오류 code
 
-Prompt, Message content, Tool arguments·output, API Key와 Provider 오류 본문은 Event payload에 넣지 않습니다. Replay용 Boundary Transcript의 저장·redaction Schema는 Issue #5에서 별도로 구현합니다.
+Prompt, Message content, Tool arguments·output, API Key와 Provider 오류 본문은 Event payload에 넣지 않습니다. Replay용 Model·Tool 경계 결과는 `RuntimeExecution.boundaries`로 분리하며 SQLite 저장 전에 별도 redaction을 적용합니다. 자세한 규칙은 [SQLite Trace와 Offline Replay 구현 가이드](replay.md)를 참고하세요.
 
 ## 실제 Provider 테스트
 
@@ -154,5 +154,5 @@ Key 값은 명령 기록이나 공유 로그에 남기지 말고 실제 개발 �
 - `rigmetry run` CLI와 Config→Adapter factory
 - retry, streaming과 병렬 Tool 실행
 - Config에서 Terminal Tool, Workspace와 Evaluator를 조립하는 Task Runner
-- SQLite Event/Boundary Transcript 저장
-- Offline Replay와 Compare
+- Task Runner의 SQLite 저장 연결
+- Compare
