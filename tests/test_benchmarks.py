@@ -12,7 +12,7 @@ TASKS = ("tag-normalization", "discount-calculation", "retry-schedule")
 def test_frozen_benchmarks_only_allow_debugging_skill_diff() -> None:
     digests = set()
     for name in TASKS:
-        lock = build_lock(BENCHMARKS / "experiments" / f"{name}.yaml")
+        lock = build_lock(BENCHMARKS / "experiments" / f"{name}-llama32.yaml")
 
         assert lock["controls"]["allow_diff"] == ["harness.skills"]
         assert lock["trials"]["count"] == 5

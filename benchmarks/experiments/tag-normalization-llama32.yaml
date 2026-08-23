@@ -1,0 +1,19 @@
+id: benchmark-tag-normalization-llama32-3b
+task: ../tasks/tag-normalization.yaml
+variants:
+  baseline: ../harnesses/baseline-llama32.yaml
+  candidate: ../harnesses/candidate-llama32.yaml
+controls:
+  require_same:
+    - task
+    - harness.model
+    - harness.mcps
+    - harness.tools
+    - harness.system_prompt
+    - harness.runtime
+  allow_diff: [harness.skills]
+trials:
+  count: 5
+  order: randomized
+  seed: 7201
+metrics: [success_rate, total_tokens, steps, model_calls, tool_calls, duration, termination]
