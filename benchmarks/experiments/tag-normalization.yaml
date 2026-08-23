@@ -1,0 +1,20 @@
+id: benchmark-tag-normalization-qwen25-15b
+task: ../tasks/tag-normalization.yaml
+variants:
+  baseline: ../harnesses/baseline.yaml
+  candidate: ../harnesses/candidate.yaml
+controls:
+  require_same:
+    - task
+    - harness.model
+    - harness.mcps
+    - harness.tools
+    - harness.system_prompt
+    - harness.runtime
+  allow_diff:
+    - harness.skills
+trials:
+  count: 5
+  order: randomized
+  seed: 7101
+metrics: [success_rate, total_tokens, steps, model_calls, tool_calls, duration, termination]

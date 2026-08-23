@@ -1,0 +1,23 @@
+name: ollama-coding-with-debugging-skill
+
+model:
+  provider: ollama
+  model: qwen2.5-coder:1.5b
+  base_url: http://localhost:11434
+
+system_prompt: >
+  You are fixing a small Python project. Inspect the files, run the focused tests, and make the
+  smallest correct change. Use the terminal tool for all inspection, testing, and edits. The
+  terminal runs one process without shell operators; use python -c when a file must be rewritten.
+  Finish only after running the evaluator command described by the task when it is discoverable.
+
+mcps: []
+tools:
+  - terminal
+skills:
+  - ../skills/debugging/SKILL.md
+
+runtime:
+  max_steps: 8
+  timeout: 120
+  max_total_tokens: 6000
