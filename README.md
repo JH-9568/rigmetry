@@ -10,7 +10,7 @@ Model만 같다고 Agent 실행 조건이 같은 것은 아닙니다. System Pro
 
 > 같은 Task, Model과 Budget에서 이 Harness 변경은 성공률과 Token 효율을 어떻게 바꾸는가?
 
-현재 저장소는 **초기 개발 단계(pre-alpha)**입니다. Config 검증·Lock, Model Adapter와 내부 Budgeted Runtime, disposable Workspace, Terminal Tool·Command Evaluator, SQLite Trace와 Offline Replay까지 구현되어 있으며 `rigmetry run` Task Runner와 Compare는 아직 구현되지 않았습니다.
+현재 저장소는 **초기 개발 단계(pre-alpha)**입니다. Config 검증·Lock부터 Budgeted Runtime, disposable Workspace, SQLite Trace·Offline Replay, 통제 Experiment와 Evidence 검증까지 MVP Vertical Slice가 구현되어 있습니다.
 
 ## 핵심 흐름
 
@@ -77,7 +77,7 @@ MVP는 서로 다른 실행 경계를 검증하기 위해 다음 두 Adapter를 
 - **OpenAI-compatible**: 환경변수로 Credential을 주입하는 원격 API
 - **Ollama Native**: 로컬 Ollama의 `/api/chat`을 사용하는 로컬 실행
 
-DeepSeek처럼 OpenAI 호환 API를 제공하는 서비스는 별도 Adapter를 만들지 않고 OpenAI-compatible 설정으로 연결할 수 있게 설계합니다. Ollama는 OpenAI 호환 Endpoint가 아니라 Native API로 연동하여 Adapter 경계와 로컬 실행 지표 정규화를 실제로 검증합니다. 두 Adapter는 내부 Runtime API로 구현되어 있으며 `rigmetry run` 연결은 아직 구현되지 않았습니다.
+DeepSeek처럼 OpenAI 호환 API를 제공하는 서비스는 별도 Adapter를 만들지 않고 OpenAI-compatible 설정으로 연결할 수 있게 설계합니다. Ollama는 OpenAI 호환 Endpoint가 아니라 Native API로 연동하여 Adapter 경계와 로컬 실행 지표 정규화를 실제로 검증합니다. 두 Adapter는 `rigmetry run`과 `rigmetry compare`의 Task Runner에 연결되어 있습니다.
 
 ## Quick Start
 
@@ -96,7 +96,7 @@ pytest
 ruff check .
 ```
 
-현재 `validate`와 `lock`은 동작합니다. Agent 실행 관련 명령은 아직 목표 인터페이스입니다.
+실제 Provider 실행에는 Harness가 지정한 API 환경변수 또는 로컬 Ollama가 필요합니다.
 
 ## `harness.yaml` 예시
 
@@ -172,21 +172,21 @@ rigmetry validate experiment.yaml
 # 구현됨: Experiment와 참조 Artifact Lock 생성
 rigmetry lock experiment.yaml
 
-# 계획됨: 단일 Task 실행
-rigmetry run --harness harness.yaml --task task.yaml
+# 단일 Task 실행·평가·SQLite 저장
+rigmetry run --harness harness.yaml --task task.yaml --database runs.sqlite
 
 # 구현됨: 저장된 SQLite Boundary Transcript를 이용한 offline replay
 rigmetry replay <run-id> --offline --database rigmetry.sqlite3
 
 # 통제 조건에 따른 반복 실행과 비교
-rigmetry compare experiment.yaml
+rigmetry compare experiment.yaml --database runs.sqlite
 
 # 이식 가능한 결과 생성과 내부 일관성 검증
-rigmetry export <experiment-id> --output evidence/
+rigmetry export <experiment-id> --database runs.sqlite --output evidence/
 rigmetry verify evidence/
 ```
 
-`replay`는 `RunStore`로 생성한 SQLite Run에 대해 동작합니다. DB를 생성하는 `run`과 `compare`, `export`, `verify`는 **목표 인터페이스이며 아직 구현되지 않았습니다**. 구현 Issue에서 옵션이 변경될 수 있습니다.
+`compare`는 Lock 검증을 외부 호출보다 먼저 수행하고 seed로 고정한 Variant 순서의 모든 Trial을 실행합니다. `export`는 해당 Experiment의 계획된 Run만 새 SQLite에 복사하며, `verify`는 Artifact digest, Lock 통제, Event chain, Run 수, Offline Replay, Report 재계산과 알려진 Secret pattern을 검사합니다.
 
 ## 핵심 지표
 
@@ -232,6 +232,9 @@ Runtime은 OpenAI-compatible, Ollama 또는 MCP 구현체를 직접 import하지
 - Model·Tool 상태 전이 Event와 호출별 Model provenance
 - SQLite Run·Event·Boundary Transcript 저장과 전체 Event hash chain 검증
 - 기존 Agent Runtime을 사용하는 무호출 `rigmetry replay --offline`
+- Config→Workspace→Runtime→Evaluator→SQLite를 연결하는 `rigmetry run`
+- seed 기반 반복 Experiment와 Provider·Model별 Metric/Pareto Report
+- Lock·SQLite·JSON/Markdown Report를 묶는 Evidence export와 내부 일관성 verify
 - 허용 root 안의 원본을 복사·정리하는 disposable Workspace lifecycle
 - 고정 작업 디렉터리, timeout, 출력 제한과 최소 환경을 적용하는 Terminal Tool
 - Agent Runtime과 별도 timeout·exit code로 판정하는 Command Evaluator
@@ -243,9 +246,6 @@ Runtime은 OpenAI-compatible, Ollama 또는 MCP 구현체를 직접 import하지
 아직 구현되지 않음:
 
 - MCP 연결과 추가 Tool 실행
-- `rigmetry run`과 Config→Runtime·Workspace·Evaluator·SQLite End-to-End 연결
-- Metric 집계, 반복 Experiment와 Harness Compare
-- Evidence Bundle Export와 Verify
 - 실제 Benchmark 결과
 
 ## MVP Roadmap

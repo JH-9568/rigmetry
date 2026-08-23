@@ -10,6 +10,7 @@ from rigmetry.models import (
     ModelResult,
     ProviderCapabilities,
     RunResult,
+    RunTerminationReason,
     ToolCall,
     ToolResult,
 )
@@ -151,6 +152,14 @@ async def replay_stored_run(stored: StoredRun) -> ReplayReport:
             "duration_ms": stored.execution.result.duration_ms,
         }
     )
+    if (
+        stored.evaluator is not None
+        and not stored.evaluator.passed
+        and replayed_result.termination_reason is RunTerminationReason.COMPLETED
+    ):
+        replayed_result = replayed_result.model_copy(
+            update={"termination_reason": RunTerminationReason.EVALUATION_FAILED}
+        )
     replayed = replayed.model_copy(update={"result": replayed_result})
 
     if _deterministic_result(replayed.result) != _deterministic_result(stored.execution.result):

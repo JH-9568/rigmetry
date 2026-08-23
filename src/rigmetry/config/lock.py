@@ -17,6 +17,7 @@ from rigmetry.config.models import (
     TaskConfig,
 )
 from rigmetry.models import canonical_json_bytes
+from rigmetry.tools import TERMINAL_DEFINITION
 
 SCHEMA_VERSION = 1
 
@@ -152,10 +153,12 @@ def _lock_harness(path: Path, config: HarnessConfig, root: Path) -> dict[str, An
 
     model = config.model.model_dump(mode="json", exclude={"model"})
     model["requested_model"] = config.model.model
-    tools = [
-        {"name": tool.name, "definition_digest": digest_json(tool.model_dump(mode="json"))}
-        for tool in config.tools
-    ]
+    tools = []
+    for tool in config.tools:
+        definition = tool.model_dump(mode="json")
+        if tool.name == "terminal" and not tool.description and not tool.input_schema:
+            definition = TERMINAL_DEFINITION.model_dump(mode="json")
+        tools.append({"name": tool.name, "definition_digest": digest_json(definition)})
     mcps = [
         {"name": mcp.name, "capability_digest": digest_json(mcp.model_dump(mode="json"))}
         for mcp in config.mcps

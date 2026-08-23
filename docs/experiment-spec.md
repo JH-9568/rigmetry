@@ -84,4 +84,4 @@ Credential 값은 Experiment와 Lock에 허용하지 않습니다. Secret은 Har
 
 ## 구현 상태
 
-Experiment Parser, 참조 Task/Harness Lock, `require_same`·`allow_diff` 검증과 Experiment digest는 구현되어 있습니다. 반복 실행, 무작위 배치 orchestration과 Compare는 아직 구현되지 않았습니다. 세부 Lock 규칙은 [Config와 Lock 구현 가이드](config-lock.md)를 참고하세요.
+Experiment Parser와 Lock, `require_same`·`allow_diff` 사전 검증, seed 기반 무작위 배치, 반복 실행과 Compare가 구현되어 있습니다. seed가 생략되면 Experiment digest에서 결정적인 배치 seed를 유도하며 이는 외부 Model 출력을 고정하지 않습니다. Report는 Provider·Model별로 분리해 `success@budget`, `tokens_per_success`, Token·단계·호출·시간·종료 사유와 Pareto 상태를 계산합니다.
