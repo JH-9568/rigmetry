@@ -10,7 +10,7 @@ Model만 같다고 Agent 실행 조건이 같은 것은 아닙니다. System Pro
 
 > 같은 Task, Model과 Budget에서 이 Harness 변경은 성공률과 Token 효율을 어떻게 바꾸는가?
 
-현재 저장소는 **초기 개발 단계(pre-alpha)**입니다. Config 검증·Lock부터 Budgeted Runtime, disposable Workspace, SQLite Trace·Offline Replay, 통제 Experiment와 Evidence 검증까지 MVP Vertical Slice가 구현되어 있습니다.
+현재 저장소는 **초기 개발 단계(pre-alpha)** 입니다. Config 검증·Lock부터 Budgeted Runtime, disposable Workspace, SQLite Trace·Offline Replay, 통제 Experiment와 Evidence 검증까지 MVP Vertical Slice가 구현되어 있습니다.
 
 ## 핵심 흐름
 
